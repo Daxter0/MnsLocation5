@@ -14,59 +14,63 @@ namespace MnsLocation5.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index1()
         {
             return View();
         }
 
-        public IActionResult UserHomePage()
+        public IActionResult UserHomePage2()
         {
             return View();
         }
 
-        public IActionResult AdminHomePage()
+        public IActionResult AdminHomePage3()
         {
             return View();
         }
 
-        public IActionResult MaterialInventoryList()
+        public IActionResult MaterialInventoryList4()
         {
             return View();
         }
-        public IActionResult MaterialDetail()
+        public IActionResult MaterialDetail5()
         {
             return View();
         }
-        public IActionResult UserLocationInformation()
+        public IActionResult UserLocationInformation6()
         {
             return View();
         }
-        public IActionResult UserLocationCart()
+        public IActionResult UserLocationCart7()
         {
             return View();
         }
-        public IActionResult UserAccountDetail()
+        public IActionResult AdminStockAccountManagement8()
         {
             return View();
         }
-        public IActionResult AdminLocationManagementRequest()
+        public IActionResult UserAccountDetail9()
+        {
+            return View();
+        }
+        public IActionResult AdminLocationRequestManagement10()
         {
             return View();
         }
 
-        public IActionResult UserLocationDetail()
+        public IActionResult UserLocationDetail11()
         {
             return View();
         }
-        public IActionResult UserGiveBackMaterial()
+        public IActionResult UserGiveBackMaterial12()
         {
             return View();
         }
-        public IActionResult AdminValidationMaterialGiveBack()
+        public IActionResult AdminValidationMaterialGiveBack13()
         {
             return View();
         }
-        public IActionResult AdminLocationValidation()
+        public IActionResult AdminLocationValidation14()
         {
             return View();
         }
