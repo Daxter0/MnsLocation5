@@ -1,15 +1,4 @@
-﻿body {
-    background: no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    font-family: Arial;
-    margin: 0px;
-    color: black;
-}
-
-html {
+﻿html {
     font-size: 14px;
 }
 
@@ -26,4 +15,12 @@ html {
 
 body {
     margin-bottom: 60px;
+    background: no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: Arial;
+    margin: 0px;
+    color: black;
 }

@@ -7,11 +7,38 @@
     font-family: Arial;
     margin: 0px;
     color: black;
+    
 }
 
-.bandeau {
-
+.topband {
+    color: #FF7001;
     padding: 50px;
     text-align: center;
     background-color: #041937;
 }
+
+.content {
+    background-color: #E5E5E5;
+
+}
+
+.input {
+    display: flex;
+    width: max-content;
+    height:max-content;
+    margin: auto;
+}
+
+#LoginInput {
+    
+}
+
+#PasswordInput{
+
+}
+
+.bottomband {
+    background-color: #FF7001;
+}
+
+
