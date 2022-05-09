@@ -7,8 +7,10 @@
     font-family: Arial;
     margin: 0px;
     color: black;
-    
+    align-items: center;
+    background-color: #f5f5f5;
 }
+
 
 .topband {
     color: #FF7001;
@@ -17,28 +19,42 @@
     background-color: #041937;
 }
 
-.content {
-    background-color: #E5E5E5;
-
-}
-
-.input {
-    display: flex;
-    width: max-content;
-    height:max-content;
+.form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
     margin: auto;
+    padding-top: 150px;
 }
 
-#LoginInput {
-    
+.form-signin .checkbox {
+    font-weight: 400;
 }
 
-#PasswordInput{
+.form-signin .form-floating:focus-within {
+    z-index: 2;
+}
 
+.form-signin input[type="email"] {
+    margin-bottom: 25px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 45px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.w-100 btn btn-lg btn-primary {
+    background-color: #f5f5f5;
 }
 
 .bottomband {
+    color: white;
     background-color: #FF7001;
+    text-align: center;
 }
 
 
