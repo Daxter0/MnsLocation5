@@ -49,8 +49,16 @@ namespace MnsLocation5
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index1}/{id?}"
+            );
+                
+                endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index1}/{id?}");
+                    pattern: "{controller=Home}/{action=UserHomePage2}/{id?}"
+            );
+                
+            
             });
         }
     }
