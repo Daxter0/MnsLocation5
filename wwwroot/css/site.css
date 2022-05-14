@@ -24,3 +24,7 @@ body {
     margin: 0px;
     color: black;
 }
+
+.RoundAngle{
+    border-radius : 5px;
+}
