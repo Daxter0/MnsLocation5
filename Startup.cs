@@ -29,6 +29,9 @@ namespace MnsLocation5
             services.AddDbContext<AdminAccountManagerContext>(options =>
                 options.UseMySQL(Configuration.GetConnectionString("DefaultConnection"))
             );
+            services.AddDbContext<AdminMaterialManagerContext>(options =>
+                options.UseMySQL(Configuration.GetConnectionString("DefaultConnection"))
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

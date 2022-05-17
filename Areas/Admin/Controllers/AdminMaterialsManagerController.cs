@@ -1,0 +1,154 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using MnsLocation5.Areas.Admin.Data;
+using MnsLocation5.Models;
+
+namespace MnsLocation5.Areas.Admin.Controllers
+{
+    [Area("Admin")]
+    public class AdminMaterialsManagerController : Controller
+    {
+        private readonly AdminMaterialManagerContext _context;
+
+        public AdminMaterialsManagerController(AdminMaterialManagerContext context)
+        {
+            _context = context;
+        }
+
+        // GET: Admin/AdminMaterialsManager
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Materials.ToListAsync());
+        }
+
+        // GET: Admin/AdminMaterialsManager/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var material = await _context.Materials
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (material == null)
+            {
+                return NotFound();
+            }
+
+            return View(material);
+        }
+
+        // GET: Admin/AdminMaterialsManager/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Admin/AdminMaterialsManager/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("ID,Name,Type,Condition,Statut")] Material material)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(material);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(material);
+        }
+
+        // GET: Admin/AdminMaterialsManager/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var material = await _context.Materials.FindAsync(id);
+            if (material == null)
+            {
+                return NotFound();
+            }
+            return View(material);
+        }
+
+        // POST: Admin/AdminMaterialsManager/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Type,Condition,Statut")] Material material)
+        {
+            if (id != material.ID)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(material);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!MaterialExists(material.ID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(material);
+        }
+
+        // GET: Admin/AdminMaterialsManager/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var material = await _context.Materials
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (material == null)
+            {
+                return NotFound();
+            }
+
+            return View(material);
+        }
+
+        // POST: Admin/AdminMaterialsManager/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var material = await _context.Materials.FindAsync(id);
+            _context.Materials.Remove(material);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool MaterialExists(int id)
+        {
+            return _context.Materials.Any(e => e.ID == id);
+        }
+    }
+}

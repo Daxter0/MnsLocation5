@@ -22,5 +22,24 @@ namespace MnsLocation5.Areas.Admin.Data
 
             context.SaveChanges();
         }
+        public static void Initialize(AdminMaterialManagerContext context)
+        {
+            if (context.Database.EnsureCreated())
+            {
+                Material[] materials = new Material[]
+            {
+                new Material{Name = "Test", Type = "Camera", Condition ="Propre", Statut="Disponible" }
+
+            };
+
+                foreach (Material material in materials )
+                {
+                    context.Materials.Add(material);
+                }
+            }
+
+            context.SaveChanges();
+        }
+
     }
 }
