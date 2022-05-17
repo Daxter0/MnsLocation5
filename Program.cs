@@ -34,10 +34,8 @@ namespace MnsLocation5
                 var services = scope.ServiceProvider;
                 try
                 {
-                    AdminAccountManagerContext contextAccount = services.GetRequiredService<AdminAccountManagerContext>();
-                    AdminMaterialManagerContext contextMaterial = services.GetRequiredService<AdminMaterialManagerContext>();
-                    DbInitializer.Initialize(contextMaterial);
-                    DbInitializer.Initialize(contextAccount);
+                    AdminManagerContext contextAdmin = services.GetRequiredService<AdminManagerContext>();
+                    DbInitializer.Initialize(contextAdmin);
                 }
                 catch (Exception ex)
                 {

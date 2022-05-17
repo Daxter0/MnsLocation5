@@ -22,7 +22,7 @@ namespace MnsLocation5.Areas.Admin.Data
 
             context.SaveChanges();
         }
-        public static void Initialize(AdminMaterialManagerContext context)
+        public static void Initialize(AdminManagerContext context)
         {
             if (context.Database.EnsureCreated())
             {

@@ -13,9 +13,9 @@ namespace MnsLocation5.Areas.Admin.Controllers
     [Area("Admin")]
     public class AdminMaterialsManagerController : Controller
     {
-        private readonly AdminMaterialManagerContext _context;
+        private readonly AdminManagerContext _context;
 
-        public AdminMaterialsManagerController(AdminMaterialManagerContext context)
+        public AdminMaterialsManagerController(AdminManagerContext context)
         {
             _context = context;
         }

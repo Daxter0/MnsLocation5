@@ -29,7 +29,7 @@ namespace MnsLocation5
             services.AddDbContext<AdminAccountManagerContext>(options =>
                 options.UseMySQL(Configuration.GetConnectionString("DefaultConnection"))
             );
-            services.AddDbContext<AdminMaterialManagerContext>(options =>
+            services.AddDbContext<AdminManagerContext>(options =>
                 options.UseMySQL(Configuration.GetConnectionString("DefaultConnection"))
             );
         }
