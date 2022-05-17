@@ -26,9 +26,6 @@ namespace MnsLocation5
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<AdminAccountManagerContext>(options =>
-                options.UseMySQL(Configuration.GetConnectionString("DefaultConnection"))
-            );
             services.AddDbContext<AdminManagerContext>(options =>
                 options.UseMySQL(Configuration.GetConnectionString("DefaultConnection"))
             );

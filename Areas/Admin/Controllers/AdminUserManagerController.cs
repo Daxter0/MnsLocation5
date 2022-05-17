@@ -11,22 +11,22 @@ using MnsLocation5.Models;
 namespace MnsLocation5.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class AdminAccountManagerController : Controller
+    public class AdminUserManagerController : Controller
     {
-        private readonly AdminAccountManagerContext _context;
+        private readonly AdminManagerContext _context;
 
-        public AdminAccountManagerController(AdminAccountManagerContext context)
+        public AdminUserManagerController(AdminManagerContext context)
         {
             _context = context;
         }
 
-        // GET: Admin/AdminAccountManager
+        // GET: Admin/AdminUserManager
         public async Task<IActionResult> Index()
         {
             return View(await _context.Users.ToListAsync());
         }
 
-        // GET: Admin/AdminAccountManager/Details/5
+        // GET: Admin/AdminUserManager/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,13 +44,13 @@ namespace MnsLocation5.Areas.Admin.Controllers
             return View(user);
         }
 
-        // GET: Admin/AdminAccountManager/Create
+        // GET: Admin/AdminUserManager/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/AdminAccountManager/Create
+        // POST: Admin/AdminUserManager/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -66,7 +66,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
             return View(user);
         }
 
-        // GET: Admin/AdminAccountManager/Edit/5
+        // GET: Admin/AdminUserManager/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,7 +82,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
             return View(user);
         }
 
-        // POST: Admin/AdminAccountManager/Edit/5
+        // POST: Admin/AdminUserManager/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -117,7 +117,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
             return View(user);
         }
 
-        // GET: Admin/AdminAccountManager/Delete/5
+        // GET: Admin/AdminUserManager/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,7 +135,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
             return View(user);
         }
 
-        // POST: Admin/AdminAccountManager/Delete/5
+        // POST: Admin/AdminUserManager/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
