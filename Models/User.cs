@@ -3,6 +3,7 @@
     public class User
     {
         public int ID { get; set; }
+        public RentalCart RentalCart { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string Adress { get; set; }
