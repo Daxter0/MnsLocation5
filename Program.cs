@@ -37,8 +37,8 @@ namespace MnsLocation5
                 {
                     AdminManagerContext contextAdmin = services.GetRequiredService<AdminManagerContext>();
                     AdminManagerDbInitializer.Initialize(contextAdmin);
-                    UserContext userContext = services.GetRequiredService<UserContext>();
-                    UserDbInitializer.Initialize(userContext);
+                    BorrowerContext userContext = services.GetRequiredService<BorrowerContext>();
+                    BorrowerDbInitializer.Initialize(userContext);
 
                 }
                 catch (Exception ex)

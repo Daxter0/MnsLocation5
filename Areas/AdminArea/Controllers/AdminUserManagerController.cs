@@ -23,7 +23,7 @@ namespace MnsLocation5.Areas.AdminArea.Controllers
         // GET: Admin/AdminUserManager
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Users.ToListAsync());
+            return View(await _context.Admins.ToListAsync());
         }
 
         // GET: Admin/AdminUserManager/Details/5
@@ -34,7 +34,7 @@ namespace MnsLocation5.Areas.AdminArea.Controllers
                 return NotFound();
             }
 
-            var user = await _context.Users
+            var user = await _context.Admins
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (user == null)
             {
@@ -55,7 +55,7 @@ namespace MnsLocation5.Areas.AdminArea.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,LastName,FirstName,Adress,PhoneNumber,Mail,Login,Password")] User user)
+        public async Task<IActionResult> Create([Bind("ID,LastName,FirstName,Adress,PhoneNumber,Mail,Login,Password")] Administrator user)
         {
             if (ModelState.IsValid)
             {
@@ -74,7 +74,7 @@ namespace MnsLocation5.Areas.AdminArea.Controllers
                 return NotFound();
             }
 
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Admins.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -87,7 +87,7 @@ namespace MnsLocation5.Areas.AdminArea.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,LastName,FirstName,Adress,PhoneNumber,Mail,Login,Password")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,LastName,FirstName,Adress,PhoneNumber,Mail,Login,Password")] Administrator user)
         {
             if (id != user.ID)
             {
@@ -125,7 +125,7 @@ namespace MnsLocation5.Areas.AdminArea.Controllers
                 return NotFound();
             }
 
-            var user = await _context.Users
+            var user = await _context.Admins
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (user == null)
             {
@@ -140,15 +140,15 @@ namespace MnsLocation5.Areas.AdminArea.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            _context.Users.Remove(user);
+            var user = await _context.Admins.FindAsync(id);
+            _context.Admins.Remove(user);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool UserExists(int id)
         {
-            return _context.Users.Any(e => e.ID == id);
+            return _context.Admins.Any(e => e.ID == id);
         }
     }
 }

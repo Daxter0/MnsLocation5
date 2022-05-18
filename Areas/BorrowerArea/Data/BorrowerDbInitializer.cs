@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace MnsLocation5.Areas.UserArea.Data
 {
-    public class UserDbInitializer
+    public class BorrowerDbInitializer
     {
-        public static void Initialize(UserContext context)
+        public static void Initialize(BorrowerContext context)
         {
             if (context.Database.EnsureCreated())
             {
