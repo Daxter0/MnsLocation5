@@ -1,15 +1,15 @@
-﻿namespace MnsLocation5.Models
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace MnsLocation5.Models
 {
     public class Material
     {
         public int ID { get; set; }
-
+        public List<RentalCart> Cart { get; set; }
+        public MaterialType MaterialType { get; set; }
         public string Name { get; set; }
-
-        public string Type { get; set; }
-
         public string Condition { get; set; }
-
         public string Statut { get; set; }
     }
 }
