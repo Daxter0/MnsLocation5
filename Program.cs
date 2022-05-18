@@ -3,7 +3,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using MnsLocation5.Areas.Admin.Data;
+using MnsLocation5.Areas.AdminArea.Data;
+using MnsLocation5.Areas.UserArea.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +36,10 @@ namespace MnsLocation5
                 try
                 {
                     AdminManagerContext contextAdmin = services.GetRequiredService<AdminManagerContext>();
-                    DbInitializer.Initialize(contextAdmin);
+                    AdminManagerDbInitializer.Initialize(contextAdmin);
+                    UserContext userContext = services.GetRequiredService<UserContext>();
+                    UserDbInitializer.Initialize(userContext);
+
                 }
                 catch (Exception ex)
                 {
