@@ -8,14 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using MnsLocation5.Areas.UserArea.Data;
 using MnsLocation5.Models;
 
-namespace MnsLocation5.Areas.UserArea.Controllers
+namespace MnsLocation5.Areas.BorrowerArea.Controllers
 {
-    [Area("UserArea")]
-    public class UserRentalCartItemController : Controller
+    [Area("BorrowerArea")]
+    public class BorrowerRentalCartItemController : Controller
     {
-        private readonly UserContext _context;
+        private readonly BorrowerContext _context;
 
-        public UserRentalCartItemController(UserContext context)
+        public BorrowerRentalCartItemController(BorrowerContext context)
         {
             _context = context;
         }

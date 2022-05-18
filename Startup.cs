@@ -30,7 +30,7 @@ namespace MnsLocation5
             services.AddDbContext<AdminManagerContext>(options =>
                 options.UseMySQL(Configuration.GetConnectionString("DefaultConnection"))
             );
-            services.AddDbContext<UserContext>(options =>
+            services.AddDbContext<BorrowerContext>(options =>
                 options.UseMySQL(Configuration.GetConnectionString("DefaultConnection"))
             );
         }

@@ -3,11 +3,11 @@ using MnsLocation5.Models;
 
 namespace MnsLocation5.Areas.UserArea.Data
 {
-    public class UserContext : DbContext
+    public class BorrowerContext : DbContext
     {
         public DbSet<RentalCart> RentalCarts { get; set; }
 
-        public UserContext(DbContextOptions<UserContext> options) : base(options)
+        public BorrowerContext(DbContextOptions<BorrowerContext> options) : base(options)
         {
         }
 
