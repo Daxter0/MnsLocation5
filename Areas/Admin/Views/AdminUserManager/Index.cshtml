@@ -63,7 +63,13 @@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                <div>
+                   <form asp-action="Delete" onsubmit="return confirm('Voulez-vous supprimer ?')">
+                        <input type="hidden" name="id" value="@item.ID" />
+                        <input type="submit" value="Delete" class="btn btn-danger" /> |
+
+                    </form>
+                </div>
             </td>
         </tr>
 }
