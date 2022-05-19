@@ -19,7 +19,18 @@ namespace MnsLocation5.Areas.UserArea.Data
                 {
                     context.RentalCarts.Add(rentalCart);
                 }
-                
+
+                Rent[] rents = new Rent[]
+                {
+                new Rent{}
+
+                };
+
+                foreach (Rent rent in rents)
+                {
+                    context.Rents.Add(rent);
+                }
+
             }
 
             context.SaveChanges();
