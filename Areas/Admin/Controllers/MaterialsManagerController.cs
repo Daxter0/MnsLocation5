@@ -5,17 +5,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MnsLocation5.Areas.AdminArea.Data;
+using MnsLocation5.Areas.Admin.Data;
 using MnsLocation5.Models;
 
-namespace MnsLocation5.Areas.AdminArea.Controllers
+namespace MnsLocation5.Areas.Admin.Controllers
 {
-    [Area("AdminArea")]
-    public class AdminMaterialsManagerController : Controller
+    [Area("Admin")]
+    public class MaterialsManagerController : Controller
     {
-        private readonly AdminManagerContext _context;
+        private readonly ManagerContext _context;
 
-        public AdminMaterialsManagerController(AdminManagerContext context)
+        public MaterialsManagerController(ManagerContext context)
         {
             _context = context;
         }

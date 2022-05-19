@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MnsLocation5.Models;
 
-namespace MnsLocation5.Areas.UserArea.Data
+namespace MnsLocation5.Areas.Borrower.Data
 {
-    public class BorrowerContext : DbContext
+    public class Context : DbContext
     {
         public DbSet<RentalCart> RentalCarts { get; set; }
         public DbSet<Rent> Rents { get; set; }
 
-        public BorrowerContext(DbContextOptions<BorrowerContext> options) : base(options)
+        public Context(DbContextOptions<Context> options) : base(options)
         {
         }
 

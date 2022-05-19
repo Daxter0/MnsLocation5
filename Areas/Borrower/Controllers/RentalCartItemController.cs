@@ -5,28 +5,28 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MnsLocation5.Areas.AdminArea.Data;
+using MnsLocation5.Areas.Borrower.Data;
 using MnsLocation5.Models;
 
-namespace MnsLocation5.Areas.Admin.Controllers
+namespace MnsLocation5.Areas.Borrower.Controllers
 {
-    [Area("AdminArea")]
-    public class AdminMaterialTypeManagerController : Controller
+    [Area("Borrower")]
+    public class RentalCartItemController : Controller
     {
-        private readonly AdminManagerContext _context;
+        private readonly Context _context;
 
-        public AdminMaterialTypeManagerController(AdminManagerContext context)
+        public RentalCartItemController(Context context)
         {
             _context = context;
         }
 
-        // GET: Admin/AdminMaterialTypeManager
+        // GET: UserArea/UserRentalCartItem
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Types.ToListAsync());
+            return View(await _context.RentalCarts.ToListAsync());
         }
 
-        // GET: Admin/AdminMaterialTypeManager/Details/5
+        // GET: UserArea/UserRentalCartItem/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,39 +34,39 @@ namespace MnsLocation5.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var materialType = await _context.Types
+            var rentalCart = await _context.RentalCarts
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (materialType == null)
+            if (rentalCart == null)
             {
                 return NotFound();
             }
 
-            return View(materialType);
+            return View(rentalCart);
         }
 
-        // GET: Admin/AdminMaterialTypeManager/Create
+        // GET: UserArea/UserRentalCartItem/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/AdminMaterialTypeManager/Create
+        // POST: UserArea/UserRentalCartItem/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name")] MaterialType materialType)
+        public async Task<IActionResult> Create([Bind("ID")] RentalCart rentalCart)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(materialType);
+                _context.Add(rentalCart);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(materialType);
+            return View(rentalCart);
         }
 
-        // GET: Admin/AdminMaterialTypeManager/Edit/5
+        // GET: UserArea/UserRentalCartItem/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -74,22 +74,22 @@ namespace MnsLocation5.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var materialType = await _context.Types.FindAsync(id);
-            if (materialType == null)
+            var rentalCart = await _context.RentalCarts.FindAsync(id);
+            if (rentalCart == null)
             {
                 return NotFound();
             }
-            return View(materialType);
+            return View(rentalCart);
         }
 
-        // POST: Admin/AdminMaterialTypeManager/Edit/5
+        // POST: UserArea/UserRentalCartItem/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name")] MaterialType materialType)
+        public async Task<IActionResult> Edit(int id, [Bind("ID")] RentalCart rentalCart)
         {
-            if (id != materialType.ID)
+            if (id != rentalCart.ID)
             {
                 return NotFound();
             }
@@ -98,12 +98,12 @@ namespace MnsLocation5.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(materialType);
+                    _context.Update(rentalCart);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MaterialTypeExists(materialType.ID))
+                    if (!RentalCartExists(rentalCart.ID))
                     {
                         return NotFound();
                     }
@@ -114,10 +114,10 @@ namespace MnsLocation5.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(materialType);
+            return View(rentalCart);
         }
 
-        // GET: Admin/AdminMaterialTypeManager/Delete/5
+        // GET: UserArea/UserRentalCartItem/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -125,30 +125,30 @@ namespace MnsLocation5.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var materialType = await _context.Types
+            var rentalCart = await _context.RentalCarts
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (materialType == null)
+            if (rentalCart == null)
             {
                 return NotFound();
             }
 
-            return View(materialType);
+            return View(rentalCart);
         }
 
-        // POST: Admin/AdminMaterialTypeManager/Delete/5
+        // POST: UserArea/UserRentalCartItem/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var materialType = await _context.Types.FindAsync(id);
-            _context.Types.Remove(materialType);
+            var rentalCart = await _context.RentalCarts.FindAsync(id);
+            _context.RentalCarts.Remove(rentalCart);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MaterialTypeExists(int id)
+        private bool RentalCartExists(int id)
         {
-            return _context.Types.Any(e => e.ID == id);
+            return _context.RentalCarts.Any(e => e.ID == id);
         }
     }
 }

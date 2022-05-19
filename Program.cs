@@ -3,8 +3,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using MnsLocation5.Areas.AdminArea.Data;
-using MnsLocation5.Areas.UserArea.Data;
+using MnsLocation5.Areas.Admin.Data;
+using MnsLocation5.Areas.Borrower.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,10 +35,10 @@ namespace MnsLocation5
                 var services = scope.ServiceProvider;
                 try
                 {
-                    AdminManagerContext contextAdmin = services.GetRequiredService<AdminManagerContext>();
-                    AdminManagerDbInitializer.Initialize(contextAdmin);
-                    BorrowerContext userContext = services.GetRequiredService<BorrowerContext>();
-                    BorrowerDbInitializer.Initialize(userContext);
+                    ManagerContext contextAdmin = services.GetRequiredService<ManagerContext>();
+                    ManagerDbInitializer.Initialize(contextAdmin);
+                    Context userContext = services.GetRequiredService<Context>();
+                    DbInitializer.Initialize(userContext);
 
                 }
                 catch (Exception ex)

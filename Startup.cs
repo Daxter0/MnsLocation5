@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MnsLocation5.Areas.AdminArea.Data;
-using MnsLocation5.Areas.UserArea.Data;
+using MnsLocation5.Areas.Admin.Data;
+using MnsLocation5.Areas.Borrower.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,10 +27,10 @@ namespace MnsLocation5
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<AdminManagerContext>(options =>
+            services.AddDbContext<ManagerContext>(options =>
                 options.UseMySQL(Configuration.GetConnectionString("DefaultConnection"))
             );
-            services.AddDbContext<BorrowerContext>(options =>
+            services.AddDbContext<Context>(options =>
                 options.UseMySQL(Configuration.GetConnectionString("DefaultConnection"))
             );
         }
@@ -60,9 +60,10 @@ namespace MnsLocation5
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                name: "AdminArea",
-                pattern: "{area:exists}/{controller=AdminController}/{action=AdminHomePage3}/{id?}"
+                name: "Admin",
+                pattern: "{area:exists}/{controller=AdminController}/{action=Index}/{id?}"
                 );
+
 
                 endpoints.MapControllerRoute(
                     name: "default",
