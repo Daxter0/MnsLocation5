@@ -55,19 +55,19 @@ namespace MnsLocation5
 
             app.UseAuthorization();
 
+            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "areas",
-                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-            );
-                
+                name: "AdminArea",
+                pattern: "{area:exists}/{controller=AdminController}/{action=AdminHomePage3}/{id?}"
+                );
+
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index1}/{id?}"
+                    pattern: "{controller=home}/{action=Index1}/{id?}"
             );
-                
-            
             });
         }
     }

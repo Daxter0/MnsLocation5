@@ -19,16 +19,16 @@ namespace MnsLocation5.Controllers
         {
             return View();
         }
+        public IActionResult AdminHomePage3()
+        {
+            return View();
+        }
 
         public IActionResult UserHomePage2()
         {
             return View();
         }
 
-        public IActionResult AdminHomePage3()
-        {
-            return View();
-        }
 
         public IActionResult MaterialInventoryList4()
         {
