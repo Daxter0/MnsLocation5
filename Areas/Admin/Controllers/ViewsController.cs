@@ -3,15 +3,14 @@ using Microsoft.Extensions.Logging;
 using MnsLocation5.Models;
 using System.Diagnostics;
 
-namespace MnsLocation5.Areas.AdminArea.Controllers
+namespace MnsLocation5.Areas.Admin.Controllers
 {
-    [Area("AdminArea")]
-    [Route("AdminAreaRoute")]
-    public class AdminController : Controller
+    [Area("Admin")]
+    public class ViewsController : Controller
     {
-        private readonly ILogger<AdminController> _logger;
+        private readonly ILogger<ViewsController> _logger;
 
-        public AdminController(ILogger<AdminController> logger)
+        public ViewsController(ILogger<ViewsController> logger)
         {
             _logger = logger;
         }

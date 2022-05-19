@@ -1,13 +1,13 @@
 ﻿using MnsLocation5.Models;
 using System.Collections.Generic;
 
-namespace MnsLocation5.Areas.UserArea.Models
+namespace MnsLocation5.Areas.Borrower.Models
 {
-    public class BorrowerRentalCartModelView
+    public class RentalCartModelView
     {
         public List<RentalCart> RentalCarts { get; set; }
 
-        public BorrowerRentalCartModelView(List<RentalCart> rentalCarts)
+        public RentalCartModelView(List<RentalCart> rentalCarts)
         {
             RentalCarts = rentalCarts;
         }

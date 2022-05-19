@@ -1,20 +1,20 @@
 ﻿using MnsLocation5.Models;
 
-namespace MnsLocation5.Areas.AdminArea.Data
+namespace MnsLocation5.Areas.Admin.Data
 {
-    public class AdminManagerDbInitializer
+    public class ManagerDbInitializer
     {
-        public static void Initialize(AdminManagerContext context)
+        public static void Initialize(ManagerContext context)
         {
             if (context.Database.EnsureCreated())
             {
-                Borrower[] borrowers = new Borrower[]
+                BorrowerTable[] borrowers = new BorrowerTable[]
                 {
-                new Borrower{FirstName="a", Password="b", Adress="c", LastName="d", Login="e", Mail="f", PhoneNumber=8}
+                new BorrowerTable{FirstName="a", Password="b", Adress="c", LastName="d", Login="e", Mail="f", PhoneNumber=8}
 
                 };
 
-                foreach (Borrower user in borrowers)
+                foreach (BorrowerTable user in borrowers)
                 {
                     context.Borrowers.Add(user);
                 }

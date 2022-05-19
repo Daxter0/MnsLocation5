@@ -1,21 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MnsLocation5.Models;
 
-namespace MnsLocation5.Areas.AdminArea.Data
+namespace MnsLocation5.Areas.Admin.Data
 {
-    public class AdminManagerContext : DbContext
+    public class ManagerContext : DbContext
     {
-        public DbSet<Borrower> Borrowers { get; set; }
+        public DbSet<BorrowerTable> Borrowers { get; set; }
         public DbSet<Administrator> Admins { get; set; }
         public DbSet<Material> Materials { get; set; }
         public DbSet<MaterialType> Types { get; set; }
-        public AdminManagerContext(DbContextOptions<AdminManagerContext> options) : base(options)
+        public ManagerContext(DbContextOptions<ManagerContext> options) : base(options)
         {
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Material>().ToTable("Material");
-            modelBuilder.Entity<Borrower>().ToTable("Borrower");
+            modelBuilder.Entity<BorrowerTable>().ToTable("Borrower");
             modelBuilder.Entity<Administrator>().ToTable("Administrator");
             modelBuilder.Entity<MaterialType>().ToTable("Type");
         }

@@ -1,11 +1,13 @@
 ﻿using MnsLocation5.Models;
 using System.Collections.Generic;
 
-namespace MnsLocation5.Areas.UserArea.Data
+
+namespace MnsLocation5.Areas.Borrower
+    .Data
 {
-    public class BorrowerDbInitializer
+    public class DbInitializer
     {
-        public static void Initialize(BorrowerContext context)
+        public static void Initialize(Context context)
         {
             if (context.Database.EnsureCreated())
             {
