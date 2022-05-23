@@ -6,6 +6,7 @@ using System.Diagnostics;
 namespace MnsLocation5.Areas.Admin.Controllers
 {
     [Area("Admin")]
+
     public class ViewsController : Controller
     {
         private readonly ILogger<ViewsController> _logger;
