@@ -59,9 +59,10 @@ namespace MnsLocation5
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
+                endpoints.MapAreaControllerRoute(
                 name: "Admin",
-                pattern: "{area:exists}/{controller=AdminController}/{action=Index}/{id?}"
+                areaName: "Admin",
+                pattern: "{area}/{controller=Views}/{action=AdminHomePage3}/{id?}"
                 );
 
 
