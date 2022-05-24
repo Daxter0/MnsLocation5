@@ -60,13 +60,13 @@ namespace MnsLocation5
 
             app.UseEndpoints(endpoints =>
             {
-<<<<<<< HEAD
+
                 endpoints.MapRazorPages();
 
-                endpoints.MapControllerRoute(
-=======
+
+
                 endpoints.MapAreaControllerRoute(
->>>>>>> 6bd081a883cd2c4553c68b163416d1bcd4ebb9a5
+
                 name: "Admin",
                 areaName: "Admin",
                 pattern: "{area}/{controller=Views}/{action=AdminHomePage3}/{id?}"
