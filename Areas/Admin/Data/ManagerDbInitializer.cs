@@ -8,26 +8,6 @@ namespace MnsLocation5.Areas.Admin.Data
         {
             if (context.Database.EnsureCreated())
             {
-                BorrowerTable[] borrowers = new BorrowerTable[]
-                {
-                new BorrowerTable{FirstName="a", Password="b", Adress="c", LastName="d", Login="e", Mail="f", PhoneNumber=8}
-
-                };
-
-                foreach (BorrowerTable user in borrowers)
-                {
-                    context.Borrowers.Add(user);
-                }
-
-                Administrator[] admins = new Administrator[]
-                {
-                    new Administrator{FirstName="a", Password="b", Adress="c", LastName="d", Login="e", Mail="f", PhoneNumber=8}
-                };
-                foreach (Administrator admin in admins)
-                {
-                    context.Admins.Add(admin);
-                }
-
                 Material[] materials = new Material[]
                 {
                 new Material{Name = "Test", Condition ="Propre", Statut="Disponible" }

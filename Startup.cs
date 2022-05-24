@@ -26,12 +26,13 @@ namespace MnsLocation5
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddRazorPages();
             services.AddControllersWithViews();
             services.AddDbContext<ManagerContext>(options =>
-                options.UseMySQL(Configuration.GetConnectionString("DefaultConnection"))
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
             );
             services.AddDbContext<Context>(options =>
-                options.UseMySQL(Configuration.GetConnectionString("DefaultConnection"))
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
             );
         }
 
@@ -59,11 +60,17 @@ namespace MnsLocation5
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapRazorPages();
+
                 endpoints.MapControllerRoute(
                 name: "Admin",
                 pattern: "{area:exists}/{controller=AdminController}/{action=Index}/{id?}"
                 );
 
+                endpoints.MapControllerRoute(
+                name: "Identity",
+                pattern: "{area:exists}/{controller=AccountController}/{action=Index}/{id?}"
+                );
 
                 endpoints.MapControllerRoute(
                     name: "default",

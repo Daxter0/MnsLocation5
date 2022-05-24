@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MnsLocation5.Areas.Admin.Data;
 using MnsLocation5.Areas.Borrower.Data;
+using MnsLocation5.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,8 @@ namespace MnsLocation5
                     ManagerDbInitializer.Initialize(contextAdmin);
                     Context userContext = services.GetRequiredService<Context>();
                     DbInitializer.Initialize(userContext);
+                    //MnsLocation5Context mnsLocation5Context = services.GetRequiredService<MnsLocation5Context>();
+                    //DbInitializer.Initialize(mnsLocation5Context);
 
                 }
                 catch (Exception ex)
