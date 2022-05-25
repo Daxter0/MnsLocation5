@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MnsLocation5.Areas.Admin.Data;
+using MnsLocation5.Data;
 using MnsLocation5.Models;
 
 namespace MnsLocation5.Areas.Admin.Controllers
@@ -13,9 +13,9 @@ namespace MnsLocation5.Areas.Admin.Controllers
     [Area("Admin")]
     public class MaterialsManagerController : Controller
     {
-        private readonly ManagerContext _context;
+        private readonly AppDbContext _context;
 
-        public MaterialsManagerController(ManagerContext context)
+        public MaterialsManagerController(AppDbContext context)
         {
             _context = context;
         }

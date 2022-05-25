@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MnsLocation5.Areas.Borrower.Data;
+using MnsLocation5.Data;
 using MnsLocation5.Models;
 
 namespace MnsLocation5.Areas.Borrower.Controllers
@@ -13,9 +14,9 @@ namespace MnsLocation5.Areas.Borrower.Controllers
     [Area("Borrower")]
     public class RentalCartItemController : Controller
     {
-        private readonly Context _context;
+        private readonly AppDbContext _context;
 
-        public RentalCartItemController(Context context)
+        public RentalCartItemController(AppDbContext context)
         {
             _context = context;
         }

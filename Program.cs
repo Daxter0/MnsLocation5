@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using MnsLocation5.Areas.Admin.Data;
 using MnsLocation5.Areas.Borrower.Data;
+using MnsLocation5.Areas.Identity.Data;
 using MnsLocation5.Data;
 using System;
 using System.Collections.Generic;
@@ -36,10 +37,10 @@ namespace MnsLocation5
                 var services = scope.ServiceProvider;
                 try
                 {
-                    ManagerContext contextAdmin = services.GetRequiredService<ManagerContext>();
-                    ManagerDbInitializer.Initialize(contextAdmin);
-                    Context userContext = services.GetRequiredService<Context>();
-                    DbInitializer.Initialize(userContext);
+                    AppDbContext appDbContext = services.GetRequiredService<AppDbContext>();
+                    DbInitializer.Initialize(appDbContext);
+                    UserContext userContext = services.GetRequiredService<UserContext>();
+                    DbUserInitializer.Initialize(userContext);
                     //MnsLocation5Context mnsLocation5Context = services.GetRequiredService<MnsLocation5Context>();
                     //DbInitializer.Initialize(mnsLocation5Context);
 
