@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace MnsLocation5.Areas.Identity.Data
+namespace MnsLocation5.Models
 {
     public class User : IdentityUser
     {

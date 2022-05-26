@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MnsLocation5.Areas.Identity.Data;
 using MnsLocation5.Data;
 using System;
 using System.Collections.Generic;
@@ -28,9 +27,9 @@ namespace MnsLocation5
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<UserContext>(options =>
-               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
-           );
+           // services.AddDbContext<UserContext>(options =>
+           //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+           //);
             //services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<UserContext>().AddDefaultTokenProviders();
             services.AddRazorPages();
             services.AddControllersWithViews();
@@ -38,6 +37,8 @@ namespace MnsLocation5
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
             );
+
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
            
 
 

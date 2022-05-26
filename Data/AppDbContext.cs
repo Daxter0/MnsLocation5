@@ -4,8 +4,9 @@ using MnsLocation5.Models;
 
 namespace MnsLocation5.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext
     {
+        public DbSet<User> Users { get; set; }
         public DbSet<Material> Materials { get; set; }
         public DbSet<MaterialType> Types { get; set; }
         public DbSet<RentalCart> RentalCarts { get; set; }
@@ -15,6 +16,7 @@ namespace MnsLocation5.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Material>().ToTable("Material");
 
             modelBuilder.Entity<MaterialType>().ToTable("Type");
