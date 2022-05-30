@@ -24,7 +24,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
         }
 
        
-        public IActionResult AdminHomePage3()
+        public IActionResult AdminHomePage()
         {
             return View();
         }
