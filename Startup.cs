@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MnsLocation5.Data;
+using MnsLocation5.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace MnsLocation5
         {
             Configuration = configuration;
         }
+       
 
         public IConfiguration Configuration { get; }
 
@@ -38,16 +40,33 @@ namespace MnsLocation5
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
             );
 
-            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
-           
-
-
-
+           services.AddIdentity<User, IdentityRole>()
+                .AddDefaultUI()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddTokenProvider<DataProtectorTokenProvider<User>>(TokenOptions.DefaultProvider);
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+         private async Task CreateRoles(IServiceProvider serviceProvider)
         {
+            //adding customs roles : Question 1
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            string[] roleNames = { "Admin", "Borrower" };
+            IdentityResult roleResult;
+
+            foreach (var roleName in roleNames)
+            {
+                var roleExist = await RoleManager.RoleExistsAsync(roleName);
+                if (!roleExist)
+                {
+                    //create the roles and seed them to the database: Question 2
+                    roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+        }
+     
+
+            // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
+            {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -62,12 +81,11 @@ namespace MnsLocation5
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            
             app.UseAuthentication();
             app.UseAuthorization();
 
             
-
             app.UseEndpoints(endpoints =>
             {
 
@@ -79,12 +97,7 @@ namespace MnsLocation5
 
                 name: "Admin",
                 areaName: "Admin",
-                pattern: "{area}/{controller=Views}/{action=AdminHomePage3}/{id?}"
-                );
-
-                endpoints.MapControllerRoute(
-                name: "Identity",
-                pattern: "{area:exists}/{controller=AccountController}/{action=Index}/{id?}"
+                pattern: "{area}/{controller=Views}/{action=AdminStockAccountManagement8}/{id?}"
                 );
 
                 endpoints.MapControllerRoute(
@@ -92,6 +105,8 @@ namespace MnsLocation5
                     pattern: "{controller=home}/{action=Index1}/{id?}"
             );
             });
+            CreateRoles(serviceProvider).Wait();
+
         }
     }
 }

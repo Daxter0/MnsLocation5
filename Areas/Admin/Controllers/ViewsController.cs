@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MnsLocation5.Models;
 using System.Diagnostics;
@@ -17,6 +18,16 @@ namespace MnsLocation5.Areas.Admin.Controllers
         }
 
         public IActionResult AdminHomePage3()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult AdminLocationValidation14()
+        {
+            return View();
+        }
+        public IActionResult AdminStockAccountManagement8()
         {
             return View();
         }

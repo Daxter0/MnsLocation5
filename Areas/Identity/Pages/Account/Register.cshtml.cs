@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using MnsLocation5.Models;
@@ -20,6 +21,7 @@ namespace MnsLocation5.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
+        public readonly List<SelectListItem> Roles;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
@@ -31,6 +33,11 @@ namespace MnsLocation5.Areas.Identity.Pages.Account
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
+            Roles = new List<SelectListItem>
+            {
+                new SelectListItem {Value = "Admin", Text = "Admin"},
+                new SelectListItem {Value ="Borrower", Text="Borrower"}
+            };
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
@@ -38,6 +45,7 @@ namespace MnsLocation5.Areas.Identity.Pages.Account
         }
 
         [BindProperty]
+
         public InputModel Input { get; set; }
 
         public string ReturnUrl { get; set; }
@@ -61,6 +69,11 @@ namespace MnsLocation5.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [Display(Name = "UserRole")]
+            public string UserRole { get; set; }
+
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -80,7 +93,6 @@ namespace MnsLocation5.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
@@ -88,9 +100,9 @@ namespace MnsLocation5.Areas.Identity.Pages.Account
                         pageHandler: null,
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
-
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    await _userManager.AddToRoleAsync(user, Input.UserRole);
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
@@ -101,11 +113,14 @@ namespace MnsLocation5.Areas.Identity.Pages.Account
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
+
+
                 }
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
+
             }
 
             // If we got this far, something failed, redisplay form
