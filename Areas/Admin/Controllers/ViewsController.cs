@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MnsLocation5.Models;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace MnsLocation5.Areas.Admin.Controllers
 {
@@ -17,16 +18,18 @@ namespace MnsLocation5.Areas.Admin.Controllers
             _logger = logger;
         }
 
+       
         public IActionResult AdminHomePage3()
         {
             return View();
         }
 
-        [Authorize(Roles = "Admin")]
         public IActionResult AdminLocationValidation14()
         {
             return View();
         }
+
+        [Authorize(Roles = "Admin")]
         public IActionResult AdminStockAccountManagement8()
         {
             return View();
