@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MnsLocation5.Models;
@@ -13,10 +14,13 @@ namespace MnsLocation5.Areas.Admin.Controllers
     public class ViewsController : Controller
     {
         private readonly ILogger<ViewsController> _logger;
-
-        public ViewsController(ILogger<ViewsController> logger)
+        //private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<User> _userManager;
+        public ViewsController(ILogger<ViewsController> logger, RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
         {
             _logger = logger;
+            //_roleManager = roleManager;
+            _userManager = userManager;
         }
 
        
@@ -44,7 +48,8 @@ namespace MnsLocation5.Areas.Admin.Controllers
         }
         public IActionResult AdminAccountIndex()
         {
-            return View();
+            var users =_userManager.Users;
+            return View(users);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -1,7 +1,7 @@
 ﻿@using MnsLocation5.Models
 @using Microsoft.AspNetCore.Identity
 @*@model IEnumerable<MnsLocation5.Models.User>*@
-@model IEnumerable<UserManager<User>>
+@model IEnumerable<User>
 
 @{
     ViewData["Title"] = "Index";
@@ -36,17 +36,17 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayNameFor(model => model.Id)
+                @item.Id
             </td>
             <td>
-                @Html.DisplayNameFor(model => model.Email)
+                @item.Email
             </td>
             <td>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
+                @item.PhoneNumber
             </td>
             <td>
                 <a asp-area="Identity" asp-page="/Account/Manage/Index">Edit</a> |
-                <a asp-area="Identity" asp-page="/Account/Manage/Index">Details</a> |
+                <a asp-area="Identity" asp-page="/Account/Manage/Index">Details</a>
                 @*<a asp-action="Delete" asp-route-id="@item.ID">Delete</a>*@
             </td>
         </tr>
