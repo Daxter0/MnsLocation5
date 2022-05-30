@@ -85,6 +85,7 @@ namespace MnsLocation5
             app.UseAuthentication();
             app.UseAuthorization();
 
+
             
             app.UseEndpoints(endpoints =>
             {
@@ -96,8 +97,8 @@ namespace MnsLocation5
                 endpoints.MapAreaControllerRoute(
 
                 name: "Admin",
-                areaName: "Admin",
-                pattern: "{area}/{controller=Views}/{action=AdminStockAccountManagement8}/{id?}"
+                areaName: "Identity",
+                pattern: "{area=Identity}/{controller=Account}/{action=Login}/{id?}"
                 );
 
                 endpoints.MapControllerRoute(
