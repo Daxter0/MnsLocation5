@@ -103,6 +103,11 @@ namespace MnsLocation5
                      areaName: "Borrower",
                      pattern: "{area:exists}/{controller=GeneralsViews}/{action=UserHomePage2}/{id?}"
                  );
+                endpoints.MapAreaControllerRoute(
+                     name: "Account",
+                     areaName: "Account",
+                     pattern: "{area:exists}/{controller=Manage}/{action=Index}/{id?}"
+                 );
 
                 endpoints.MapControllerRoute(
                     name: "default",

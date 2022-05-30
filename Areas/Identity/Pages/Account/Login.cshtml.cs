@@ -14,6 +14,8 @@ using Microsoft.Extensions.Logging;
 using MnsLocation5.Models;
 using System.Security.Claims;
 using System.Net;
+using MnsLocation5.Data;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace MnsLocation5.Areas.Identity.Pages.Account
 {
@@ -77,16 +79,6 @@ namespace MnsLocation5.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             
-            if ()
-            {
-                returnUrl ??= Url.Content("~/Borrower/GeneralsView/UserHomePage2");
-
-            }
-            else
-            {
-                returnUrl ??= Url.Content("~/Admin/Views/AdminHomePage3");
-
-            }
 
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -99,7 +91,20 @@ namespace MnsLocation5.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    
+                    var user = await _userManager.FindByEmailAsync(Input.Email);
+                    var roles = await _userManager.GetRolesAsync(user);
+                    foreach (var role in roles)
+                    {
+                        if (role == "Admin")
+                        {
+                            returnUrl ??= Url.Content("~/Admin/Views/AdminHomePage3");
+                        }
+                        else
+                        {
+                            returnUrl ??= Url.Content("~/Borrower/GeneralsView/UserHomePage2");
+
+                        }
+                    }
 
                     return LocalRedirect(returnUrl);
                 }

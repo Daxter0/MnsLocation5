@@ -8,6 +8,7 @@ using System.Security.Claims;
 namespace MnsLocation5.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
 
     public class ViewsController : Controller
     {
@@ -23,14 +24,25 @@ namespace MnsLocation5.Areas.Admin.Controllers
         {
             return View();
         }
+        public IActionResult AdminLocationrequestManagement10()
+        {
+            return View();
+        }
+        public IActionResult AdminValidationMaterialGiveBack13()
+        {
+            return View();
+        }
 
         public IActionResult AdminLocationValidation14()
         {
             return View();
         }
 
-        [Authorize(Roles = "Admin")]
         public IActionResult AdminStockAccountManagement8()
+        {
+            return View();
+        }
+        public IActionResult AdminAccountIndex()
         {
             return View();
         }

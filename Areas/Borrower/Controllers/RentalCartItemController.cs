@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,8 @@ using MnsLocation5.Models;
 namespace MnsLocation5.Areas.Borrower.Controllers
 {
     [Area("Borrower")]
+    [Authorize(Roles = "Borrower")]
+
     public class RentalCartItemController : Controller
     {
         private readonly AppDbContext _context;
