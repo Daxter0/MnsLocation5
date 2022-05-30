@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using MnsLocation5.Models
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -30,7 +34,15 @@
             <img src="~/Images/MNS sans fond.png" />
           </div>
           <div class="d-flex justify-content-end col-2">
-            <a class="navbar-brand d-flex justify-content-end " href="#!">Se déconnecter</a>
+              <a class="navbar-brand d-flex justify-content-end">@UserManager.GetUserName(User)</a>
+              @{
+                   if (User.Identity.IsAuthenticated)
+                   {
+                        <form class="navbar-brand d-flex justify-content-end" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/Identity/Account/Login" method="post">
+                            <button type="submit" class="nav-link btn btn-link text-dark">Se déconnecter</button>
+                        </form>
+                   }
+               }
           </div>
         </nav>
         <nav class="navbar navbar-expand-lg LocationNavigation">

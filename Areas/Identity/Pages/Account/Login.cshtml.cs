@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using MnsLocation5.Models;
+using System.Security.Claims;
+using System.Net;
 
 namespace MnsLocation5.Areas.Identity.Pages.Account
 {
@@ -74,7 +76,18 @@ namespace MnsLocation5.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
+            
+            if ()
+            {
+                returnUrl ??= Url.Content("~/Borrower/GeneralsView/UserHomePage2");
+
+            }
+            else
+            {
+                returnUrl ??= Url.Content("~/Admin/Views/AdminHomePage3");
+
+            }
+
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         
@@ -86,6 +99,7 @@ namespace MnsLocation5.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    
 
                     return LocalRedirect(returnUrl);
                 }

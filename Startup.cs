@@ -30,10 +30,7 @@ namespace MnsLocation5
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           // services.AddDbContext<UserContext>(options =>
-           //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
-           //);
-            //services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<UserContext>().AddDefaultTokenProviders();
+           
             services.AddRazorPages();
             services.AddControllersWithViews();
             
@@ -45,6 +42,11 @@ namespace MnsLocation5
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddTokenProvider<DataProtectorTokenProvider<User>>(TokenOptions.DefaultProvider);
+
+            services.AddMvc().AddRazorPagesOptions(options =>
+            {
+                options.Conventions.AddAreaPageRoute("Identity", "/Account/Login", "");
+            });
         }
         private async Task CreateRoles(IServiceProvider serviceProvider)
         {
@@ -85,18 +87,22 @@ namespace MnsLocation5
             app.UseAuthentication();
             app.UseAuthorization();
 
-
             
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
 
                 endpoints.MapAreaControllerRoute(
-
-                name: "Admin",
-                areaName: "Identity",
-                pattern: "{area=Identity}/{controller=Account}/{action=Login}/{id?}"
-                );
+                     name: "Admin",
+                     areaName:"Admin",
+                     pattern: "{area:exists}/{controller=Views}/{action=AdminHomePage3}/{id?}"
+                 );
+                endpoints.MapAreaControllerRoute(
+                     name: "Borrower",
+                     areaName: "Borrower",
+                     pattern: "{area:exists}/{controller=GeneralsViews}/{action=UserHomePage2}/{id?}"
+                 );
 
                 endpoints.MapControllerRoute(
                     name: "default",
