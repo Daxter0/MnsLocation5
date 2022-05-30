@@ -35,8 +35,8 @@ namespace MnsLocation5.Areas.Identity.Pages.Account
         {
             Roles = new List<SelectListItem>
             {
-                new SelectListItem {Value = "Admin", Text = "Admin"},
-                new SelectListItem {Value ="Borrower", Text="Borrower"}
+                new SelectListItem {Value ="Borrower", Text="Borrower"},
+                new SelectListItem {Value = "Admin", Text = "Admin"}
             };
             _userManager = userManager;
             _signInManager = signInManager;
