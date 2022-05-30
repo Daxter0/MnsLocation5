@@ -10,8 +10,15 @@
     <link rel="stylesheet" href="~/MnsLocation5.styles.css" asp-append-version="true" />
 </head>
 <body>
+    <div class="topband">
+    <h1 class="display-4">MNS LOCATION</h1>
+    </div>
     <div>
         @RenderBody()
     </div>
+    <footer class="bottomband">
+    <a>Metz Numeric School</a>
+    </footer>
+     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

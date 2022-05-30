@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -45,7 +46,7 @@ namespace MnsLocation5
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddTokenProvider<DataProtectorTokenProvider<User>>(TokenOptions.DefaultProvider);
         }
-         private async Task CreateRoles(IServiceProvider serviceProvider)
+        private async Task CreateRoles(IServiceProvider serviceProvider)
         {
             //adding customs roles : Question 1
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -62,11 +63,10 @@ namespace MnsLocation5
                 }
             }
         }
-     
 
-            // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-            public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
-            {
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
+        {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -88,10 +88,7 @@ namespace MnsLocation5
             
             app.UseEndpoints(endpoints =>
             {
-
                 endpoints.MapRazorPages();
-
-
 
                 endpoints.MapAreaControllerRoute(
 
@@ -103,10 +100,9 @@ namespace MnsLocation5
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=home}/{action=Index1}/{id?}"
-            );
+                );
             });
             CreateRoles(serviceProvider).Wait();
-
         }
     }
 }
