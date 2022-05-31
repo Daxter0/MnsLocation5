@@ -62,16 +62,16 @@ namespace MnsLocation5.Areas.Identity.Pages.Account
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Mot de passe")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Confirmez mot de passe")]
+            [Compare("Password", ErrorMessage = "Le mot de passe ne correspond pas.")]
             public string ConfirmPassword { get; set; }
 
             [Required]
-            [Display(Name = "UserRole")]
+            [Display(Name = "Statut")]
             public string UserRole { get; set; }
 
         }
@@ -100,8 +100,8 @@ namespace MnsLocation5.Areas.Identity.Pages.Account
                         pageHandler: null,
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    await _emailSender.SendEmailAsync(Input.Email, "Confirmez votre email",
+                        $"Confirmez votre compte en cliquant sur ce lien <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>cliquez ici</a>.");
                     await _userManager.AddToRoleAsync(user, Input.UserRole);
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)

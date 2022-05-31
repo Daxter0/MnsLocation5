@@ -24,9 +24,9 @@ namespace MnsLocation5.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminMaterialsManager
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchName)
         {
-            return View(await _context.Materials.ToListAsync());
+            return View(await _context.Materials.Where(x => x.Name.Contains(searchName)|| searchName == null).ToListAsync());
         }
 
         // GET: Admin/AdminMaterialsManager/Details/5

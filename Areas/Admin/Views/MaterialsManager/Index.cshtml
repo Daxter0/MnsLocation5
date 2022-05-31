@@ -10,6 +10,12 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<form asp-controller="MaterialsManager" asp-action="Index">
+    <p>
+        Chercher par nom: <input type="text" name="searchName" />
+        <input type="submit" value="Rechercher" />
+    </p>
+</form>
 <table class="table">
     <thead>
         <tr>
