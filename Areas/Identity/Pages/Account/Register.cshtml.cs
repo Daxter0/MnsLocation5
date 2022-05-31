@@ -35,8 +35,8 @@ namespace MnsLocation5.Areas.Identity.Pages.Account
         {
             Roles = new List<SelectListItem>
             {
-                new SelectListItem {Value = "Admin", Text = "Admin"},
-                new SelectListItem {Value ="Borrower", Text="Borrower"}
+                new SelectListItem {Value ="Borrower", Text="Borrower"},
+                new SelectListItem {Value = "Admin", Text = "Admin"}
             };
             _userManager = userManager;
             _signInManager = signInManager;
@@ -54,6 +54,18 @@ namespace MnsLocation5.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            [Display(Name = "Nom")]
+            public string LastName { get; set; }
+
+            [Display(Name = "Prénom")]
+            public string FirstName { get; set; }
+
+            [Display(Name = "Adresse")]
+            public string Adress { get; set; }
+
+            [Display(Name = "Numéro de téléphone")]
+            public string PhoneNumber { get; set; }
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -88,7 +100,7 @@ namespace MnsLocation5.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = Input.Email, Email = Input.Email };
+                var user = new User { UserName = Input.Email, Email = Input.Email, Adress = Input.Adress, FirstName = Input.FirstName, LastName = Input.LastName, PhoneNumber = Input.PhoneNumber};
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

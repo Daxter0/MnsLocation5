@@ -33,8 +33,17 @@ namespace MnsLocation5.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
+
+            [Display(Name = "Nom")]
+            public string LastName { get; set; }
+
+            [Display(Name = "Prénom")]
+            public string FirstName { get; set; }
+
+            [Display(Name = "Adresse")]
+            public string Adress { get; set; }
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Numéro de téléphone")]
             public string PhoneNumber { get; set; }
         }
 
@@ -47,7 +56,10 @@ namespace MnsLocation5.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                LastName = user.LastName,
+                FirstName = user.FirstName,
+                Adress = user.Adress
             };
         }
 
@@ -65,6 +77,7 @@ namespace MnsLocation5.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostAsync()
         {
+           
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -87,7 +100,19 @@ namespace MnsLocation5.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
-
+            if (Input.FirstName != user.FirstName)
+            {
+                user.FirstName = Input.FirstName;
+            }
+            if (Input.LastName != user.LastName)
+            {
+                user.LastName = Input.LastName;
+            }
+            if (Input.Adress != user.Adress)
+            {
+                user.Adress = Input.Adress;
+            }
+            await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();

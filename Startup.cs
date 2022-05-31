@@ -95,8 +95,8 @@ namespace MnsLocation5
 
                 endpoints.MapAreaControllerRoute(
                      name: "Admin",
-                     areaName:"Admin",
-                     pattern: "{area:exists}/{controller=Views}/{action=AdminHomePage3}/{id?}"
+                     areaName: "Admin",
+                     pattern: "{area:exists}/{controller=Views}/{action=AdminHomePage}/{id?}"
                  );
                 endpoints.MapAreaControllerRoute(
                      name: "Borrower",
