@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MnsLocation5.Data;
 using MnsLocation5.Models;
+using MnsLocation5.ViewsModel;
 
 namespace MnsLocation5.Areas.Admin.Controllers
 {
@@ -50,7 +51,10 @@ namespace MnsLocation5.Areas.Admin.Controllers
         // GET: Admin/AdminMaterialsManager/Create
         public IActionResult Create()
         {
-            return View();
+            var model = new CreateMaterialViewModel();
+            model.ListType = _context.Types.Select(x => new SelectListItem() { Value = x.ID.ToString(), Text = x.Name }).ToList();
+            
+            return View(model);
         }
 
         // POST: Admin/AdminMaterialsManager/Create
@@ -62,12 +66,13 @@ namespace MnsLocation5.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(material);
+                _context.Add(material);                
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(material);
         }
+      
 
         // GET: Admin/AdminMaterialsManager/Edit/5
         public async Task<IActionResult> Edit(int? id)

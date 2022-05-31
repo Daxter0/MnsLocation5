@@ -18,7 +18,6 @@ namespace MnsLocation5.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Material>().ToTable("Material");
-
             modelBuilder.Entity<MaterialType>().ToTable("Type");
             modelBuilder.Entity<RentalCart>().ToTable("RentalCarts");
             modelBuilder.Entity<Rent>().ToTable("Rents");
