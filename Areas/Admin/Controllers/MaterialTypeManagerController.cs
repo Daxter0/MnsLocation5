@@ -26,7 +26,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
         // GET: Admin/AdminMaterialTypeManager
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Types.ToListAsync());
+            return View(await _context.MaterialType.ToListAsync());
         }
 
         // GET: Admin/AdminMaterialTypeManager/Details/5
@@ -37,7 +37,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var materialType = await _context.Types
+            var materialType = await _context.MaterialType
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (materialType == null)
             {
@@ -77,7 +77,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var materialType = await _context.Types.FindAsync(id);
+            var materialType = await _context.MaterialType.FindAsync(id);
             if (materialType == null)
             {
                 return NotFound();
@@ -128,7 +128,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var materialType = await _context.Types
+            var materialType = await _context.MaterialType
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (materialType == null)
             {
@@ -143,15 +143,15 @@ namespace MnsLocation5.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var materialType = await _context.Types.FindAsync(id);
-            _context.Types.Remove(materialType);
+            var materialType = await _context.MaterialType.FindAsync(id);
+            _context.MaterialType.Remove(materialType);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MaterialTypeExists(int id)
         {
-            return _context.Types.Any(e => e.ID == id);
+            return _context.MaterialType.Any(e => e.ID == id);
         }
     }
 }

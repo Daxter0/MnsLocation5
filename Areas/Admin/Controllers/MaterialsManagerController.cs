@@ -52,7 +52,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
         public IActionResult Create()
         {
             var model = new CreateMaterialViewModel();
-            model.ListType = _context.Types.Select(x => new SelectListItem() { Value = x.ID.ToString(), Text = x.Name }).ToList();
+            model.ListType = _context.MaterialType.Select(x => new SelectListItem() { Value = x.ID.ToString(), Text = x.Name }).ToList();
             
             return View(model);
         }
@@ -62,7 +62,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Type,Condition,Statut")] Material material)
+        public async Task<IActionResult> Create([Bind("ID,Name,Tye,Condition,Statut")] Material material)
         {
             if (ModelState.IsValid)
             {

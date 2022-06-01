@@ -48,7 +48,7 @@ namespace MnsLocation5.Areas.Borrower
                 };
                 foreach (MaterialType materialType in materialTypes)
                 {
-                    context.Types.Add(materialType);
+                    context.MaterialType.Add(materialType);
                 }
 
             }
