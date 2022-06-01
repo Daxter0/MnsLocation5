@@ -62,9 +62,10 @@ namespace MnsLocation5.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        
         public async Task<IActionResult> Create([Bind("ID,MaterialType,Name,Condition,Statut")] Material material)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid) //mettre un point d'arret ici afin de voir ce que recup material
             {
                 
                 _context.Add(material);                
