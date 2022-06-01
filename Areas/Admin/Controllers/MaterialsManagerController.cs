@@ -66,6 +66,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 _context.Add(material);                
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

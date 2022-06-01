@@ -7,6 +7,6 @@ namespace MnsLocation5.Models
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public List<Material> Materials { get; set; }
+        //public List<Material> Materials { get; set; }
     }
 }

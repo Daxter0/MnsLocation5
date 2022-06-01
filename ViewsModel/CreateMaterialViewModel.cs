@@ -8,6 +8,7 @@ namespace MnsLocation5.ViewsModel
     public class CreateMaterialViewModel
     {
         public Material Material { get; set; }
+        public int MaterialTypeID { get; set; }
         public MaterialType MaterialType { get; set; }
         public List<SelectListItem> ListType { get; set; }
         public CreateMaterialViewModel()

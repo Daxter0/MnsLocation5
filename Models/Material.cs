@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MnsLocation5.Models
 {
@@ -9,7 +10,8 @@ namespace MnsLocation5.Models
     {
         public int ID { get; set; }
         public List<RentalCart> Cart { get; set; }
-        [BindProperty]
+
+        [ForeignKey("MaterialTypeID")]
         public MaterialType MaterialType { get; set; }
         [DisplayName("Nom")]
         public string Name { get; set; }
