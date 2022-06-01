@@ -8,7 +8,7 @@ namespace MnsLocation5.Data
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Material> Materials { get; set; }
-        public DbSet<MaterialType> MaterialType { get; set; }
+        public DbSet<MaterialType> Types { get; set; }
         public DbSet<RentalCart> RentalCarts { get; set; }
         public DbSet<Rent> Rents { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
@@ -18,7 +18,7 @@ namespace MnsLocation5.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Material>().ToTable("Materials");
-            modelBuilder.Entity<MaterialType>().ToTable("MaterialType");
+            modelBuilder.Entity<MaterialType>().ToTable("Types");
             modelBuilder.Entity<RentalCart>().ToTable("RentalCarts");
             modelBuilder.Entity<Rent>().ToTable("Rents");
 

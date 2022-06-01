@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -8,6 +9,7 @@ namespace MnsLocation5.Models
     {
         public int ID { get; set; }
         public List<RentalCart> Cart { get; set; }
+        [BindProperty]
         public MaterialType MaterialType { get; set; }
         [DisplayName("Nom")]
         public string Name { get; set; }

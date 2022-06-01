@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using MnsLocation5.Models;
+using System;
 using System.Collections.Generic;
 
 namespace MnsLocation5.ViewsModel
@@ -7,9 +8,19 @@ namespace MnsLocation5.ViewsModel
     public class CreateMaterialViewModel
     {
         public Material Material { get; set; }
-        public int MaterialID { get; set; }
+        public MaterialType MaterialType { get; set; }
         public List<SelectListItem> ListType { get; set; }
-
-       
+        public CreateMaterialViewModel()
+        {
+            Material = new Material();
+            MaterialType = new MaterialType();
+            ListType = new List<SelectListItem>();
+        }
+        public CreateMaterialViewModel(Material material, MaterialType materialType, List<SelectListItem> listType)
+        {
+            Material = material ?? throw new ArgumentNullException(nameof(material));
+            MaterialType = materialType ?? throw new ArgumentNullException(nameof(materialType));
+            ListType = listType ?? throw new ArgumentNullException(nameof(listType));
+        }
     }
 }
