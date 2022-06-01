@@ -46,9 +46,8 @@
             </td>
             <td>
                 <a asp-area="Identity" asp-page="/Account/Manage/Index">Edit</a> |
-                <a    asp-area="Identity" asp-page="/Account/Manage/Index">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id"   class="btn btn-danger">Delete</a>
-                
+                <a asp-action="Index" asp-route-id="@item.Id"  >Details</a> |
+                <a asp-action="DeletePersonalData" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
             </td>
         </tr>
 }

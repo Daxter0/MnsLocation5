@@ -46,6 +46,7 @@ namespace MnsLocation5
             services.AddMvc().AddRazorPagesOptions(options =>
             {
                 options.Conventions.AddAreaPageRoute("Identity", "/Account/Login", "");
+
             });
         }
         private async Task CreateRoles(IServiceProvider serviceProvider)
