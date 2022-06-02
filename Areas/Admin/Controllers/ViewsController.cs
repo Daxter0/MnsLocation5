@@ -84,21 +84,12 @@ namespace MnsLocation5.Areas.Admin.Controllers
             return RedirectToAction("AdminAccountIndex");
         }
 
-        public async Task Index(string id)
+        public async Task UpdateUserDetails(string id)
         {
-            if (id == null)
-            {
-                NotFound();
-            }
+            IndexModel i = new IndexModel(_userManager, _signInManager);
+            await i.Index(id);
             
-            var user = await _userManager.FindByIdAsync(id);
-            if (user == null)
-            {
-                NotFound();
-            }
-            
-            await _userManager.UpdateAsync(user);
-            
+
         }
     }
 }

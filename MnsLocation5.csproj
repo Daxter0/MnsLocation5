@@ -33,4 +33,13 @@
     <Folder Include="Areas\Borrower\Data\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="Areas\Admin\Views\Views\AdminAccountIndex.cshtml" />
+    <None Include="Areas\Admin\Views\Views\AdminHomePage3.cshtml" />
+    <None Include="Areas\Admin\Views\Views\AdminLocationRequestManagement10.cshtml" />
+    <None Include="Areas\Admin\Views\Views\AdminLocationValidation14.cshtml" />
+    <None Include="Areas\Admin\Views\Views\AdminStockAccountManagement8.cshtml" />
+    <None Include="Areas\Admin\Views\Views\AdminValidationMaterialGiveBack13.cshtml" />
+  </ItemGroup>
+
 </Project>

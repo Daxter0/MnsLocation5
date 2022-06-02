@@ -117,5 +117,23 @@ namespace MnsLocation5.Areas.Identity.Pages.Account.Manage
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }
+
+        public async Task<IActionResult> Index(string id)
+        {
+            if (id == null)
+            {
+                NotFound();
+            }
+
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                NotFound();
+            }
+
+            await LoadAsync(user);
+
+            return RedirectToPage("Index", user);
+        }
     }
 }

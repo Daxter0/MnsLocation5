@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using MnsLocation5.Models
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -7,74 +11,49 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MnsLocation5.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/AdminLayout.css" asp-append-version="true" />
 </head>
-<body>
+<body class ="bgAdminPage">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MnsLocation5</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index1">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="UserHomePage2">UserHomePage</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AdminHomePage3">AdminHomePage</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="MaterialInventoryList4">MaterialInventoryList</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="MaterialDetail5">MaterialDetail</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="UserLocationInformation6">UserLocationInformation</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="UserLocationCart7">UserLocationCart</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AdminStockAccountManagement8">AdminStockAccountManagement</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="UserAccountDetail9">UserAccountDetail</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AdminLocationRequestManagement10">AdminLocationRequestManagement</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="UserLocationDetail11">UserLocationDetail</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="UserGiveBackMaterial12">UserGiveBackMaterial</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AdminValidationMaterialGiveBack13">AdminValidationMaterialGiveBack</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AdminLocationValidation14">AdminLocationValidation</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <nav class="navbar navbar-expand-lg MainNavigation">
+          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a asp-area="Admin" asp-controller="Views" asp-action="AdminHomePage3"  class="navbar-brand ">Accueil</a>
+
+          <div class="collapse navbar-collapse col-2 " id="navbarTogglerDemo02">
+            <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+              <li class="nav-item active">
+                <a class="nav-link NotificationNav material-symbols-outlined"  href="#!">notifications<span class="sr-only">(current)</span></a>
+              </li>              
+            </ul>
+          </div>
+          <div class="d-flex justify-content-center col-7 mr-2">
+            <img src="~/Images/MNS sans fond.png" />
+          </div>
+          <div class="d-flex justify-content-end col-2">
+              <a class="navbar-brand d-flex justify-content-end">@UserManager.GetUserName(User)</a>
+              @{
+                   if (User.Identity.IsAuthenticated)
+                   {
+                        <form class="navbar-brand d-flex justify-content-end" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/Identity/Account/Login" method="post">
+                            <button type="submit" class="nav-link btn btn-link text-dark">Se déconnecter</button>
+                        </form>
+                   }
+               }
+          </div>
+        </nav>        
     </header>
-    <div class="container">
+
+    <div class="container ">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer  text-muted">
         <div class="container">
-            &copy; 2022 - MnsLocation5 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - MnsLocation
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
