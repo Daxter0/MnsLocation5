@@ -17,10 +17,10 @@ namespace MnsLocation5.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Material>().ToTable("Materials");
-            modelBuilder.Entity<MaterialType>().ToTable("Types");
-            modelBuilder.Entity<RentalCart>().ToTable("RentalCarts");
-            modelBuilder.Entity<Rent>().ToTable("Rents");
+            modelBuilder.Entity<Material>().ToTable("Material");
+            modelBuilder.Entity<MaterialType>().ToTable("Type");
+            modelBuilder.Entity<RentalCart>().ToTable("RentalCart");
+            modelBuilder.Entity<Rent>().ToTable("Rent");
 
         }
     }
