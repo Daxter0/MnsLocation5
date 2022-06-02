@@ -8,11 +8,14 @@ namespace MnsLocation5.Models
 {
     public class Material
     {
-        public int ID { get; set; }
-        public List<RentalCart> Cart { get; set; }
+        public int Id { get; set; }
+        //public List<RentalCart> Cart { get; set; }
+        
+        public int TypeRefId { get; set; }
 
-        [ForeignKey("MaterialTypeID")]
-        public MaterialType MaterialType { get; set; }
+        [ForeignKey("TypeRefId")]
+        public MaterialType Type { get; set; }
+
         [DisplayName("Nom")]
         public string Name { get; set; }
         public string Condition { get; set; }

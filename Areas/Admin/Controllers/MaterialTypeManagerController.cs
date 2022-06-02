@@ -38,7 +38,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
             }
 
             var materialType = await _context.Types
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (materialType == null)
             {
                 return NotFound();
@@ -92,7 +92,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Name")] MaterialType materialType)
         {
-            if (id != materialType.ID)
+            if (id != materialType.Id)
             {
                 return NotFound();
             }
@@ -106,7 +106,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MaterialTypeExists(materialType.ID))
+                    if (!MaterialTypeExists(materialType.Id))
                     {
                         return NotFound();
                     }
@@ -129,7 +129,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
             }
 
             var materialType = await _context.Types
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (materialType == null)
             {
                 return NotFound();
@@ -151,7 +151,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
 
         private bool MaterialTypeExists(int id)
         {
-            return _context.Types.Any(e => e.ID == id);
+            return _context.Types.Any(e => e.Id == id);
         }
     }
 }

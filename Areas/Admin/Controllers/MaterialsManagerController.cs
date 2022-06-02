@@ -39,7 +39,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
             }
 
             var material = await _context.Materials
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (material == null)
             {
                 return NotFound();
@@ -52,7 +52,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
         public IActionResult Create()
         {
             var model = new CreateMaterialViewModel();
-            model.ListType = _context.Types.Select(x => new SelectListItem() { Value = x.ID.ToString(), Text = x.Name }).ToList();
+            model.ListType = _context.Types.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Name }).ToList();
             
             return View(model);
         }
@@ -63,16 +63,16 @@ namespace MnsLocation5.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         
-        public async Task<IActionResult> Create([Bind("ID,MaterialType,Name,Condition,Statut")] Material material)
+        public async Task<IActionResult> Create(CreateMaterialViewModel createMaterial)
         {
             if (ModelState.IsValid) //mettre un point d'arret ici afin de voir ce que recup material
             {
-                
+                Material material = new Material() { Name = createMaterial.Material.Name, TypeRefId = createMaterial.MaterialTypeID, Condition = createMaterial.Material.Condition, Statut = createMaterial.Material.Statut };
                 _context.Add(material);                
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(material);
+            return View(createMaterial);
         }
       
 
@@ -99,7 +99,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Type,Condition,Statut")] Material material)
         {
-            if (id != material.ID)
+            if (id != material.Id)
             {
                 return NotFound();
             }
@@ -113,7 +113,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MaterialExists(material.ID))
+                    if (!MaterialExists(material.Id))
                     {
                         return NotFound();
                     }
@@ -136,7 +136,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
             }
 
             var material = await _context.Materials
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (material == null)
             {
                 return NotFound();
@@ -158,7 +158,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
 
         private bool MaterialExists(int id)
         {
-            return _context.Materials.Any(e => e.ID == id);
+            return _context.Materials.Any(e => e.Id == id);
         }
     }
 }
