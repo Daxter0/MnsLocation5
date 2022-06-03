@@ -46,6 +46,7 @@ namespace MnsLocation5
             services.AddMvc().AddRazorPagesOptions(options =>
             {
                 options.Conventions.AddAreaPageRoute("Identity", "/Account/Login", "");
+
             });
         }
         private async Task CreateRoles(IServiceProvider serviceProvider)
@@ -95,8 +96,8 @@ namespace MnsLocation5
 
                 endpoints.MapAreaControllerRoute(
                      name: "Admin",
-                     areaName:"Admin",
-                     pattern: "{area:exists}/{controller=Views}/{action=AdminHomePage3}/{id?}"
+                     areaName: "Admin",
+                     pattern: "{area:exists}/{controller=Views}/{action=AdminHomePage}/{id?}"
                  );
                 endpoints.MapAreaControllerRoute(
                      name: "Borrower",

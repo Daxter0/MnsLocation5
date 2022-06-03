@@ -54,6 +54,18 @@ namespace MnsLocation5.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            [Display(Name = "Nom")]
+            public string LastName { get; set; }
+
+            [Display(Name = "Prénom")]
+            public string FirstName { get; set; }
+
+            [Display(Name = "Adresse")]
+            public string Adress { get; set; }
+
+            [Display(Name = "Numéro de téléphone")]
+            public string PhoneNumber { get; set; }
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -71,7 +83,7 @@ namespace MnsLocation5.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             [Required]
-            [Display(Name = "Statut")]
+            [Display(Name = "Rôle du compte")]
             public string UserRole { get; set; }
 
         }
@@ -84,11 +96,11 @@ namespace MnsLocation5.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
+            returnUrl ??= Url.Content("~/Admin/Views/AdminAccountIndex");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = Input.Email, Email = Input.Email };
+                var user = new User { UserName = Input.Email, Email = Input.Email, Adress = Input.Adress, FirstName = Input.FirstName, LastName = Input.LastName, PhoneNumber = Input.PhoneNumber};
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
@@ -110,7 +122,7 @@ namespace MnsLocation5.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        //await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
 

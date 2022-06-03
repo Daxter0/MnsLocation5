@@ -26,6 +26,9 @@ namespace MnsLocation5.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(256)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(256)", nullable: true),
+                    Adress = table.Column<string>(type: "nvarchar(256)", nullable: true),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),

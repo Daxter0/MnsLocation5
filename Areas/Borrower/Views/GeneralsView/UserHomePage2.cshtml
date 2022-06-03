@@ -12,3 +12,54 @@
     <button class=" d-flex justify-content-center mt-4 rounded-pill p-2">Casque VR</button>
     <button class=" d-flex justify-content-center mt-4 rounded-pill p-2">Microphone</button>
 </div>
+@*@using MnsLocation5.Models
+@using Microsoft.AspNetCore.Identity
+@model IEnumerable<MnsLocation5.Models.User>
+@model IEnumerable<User>
+
+
+
+<h1>Index</h1>
+
+<p>
+    <a asp-area="Identity" asp-page="/Account/Register">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor()
+
+            </th>*@
+        </tr>
+    </thead>
+    <tbody>
+@*@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.Id
+            </td>
+            <td>
+                @item.Email
+            </td>
+            <td>
+                @item.PhoneNumber
+            </td>
+            <td>
+                <a asp-area="Identity" asp-page="/Account/Manage/Index">Edit</a> |
+                <a asp-action="UpdateUserDetails" asp-route-id="@item.Id"  >Details</a> |
+                <a asp-action="DeletePersonalData" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>*@

@@ -1,7 +1,12 @@
-﻿a.navbar-brand {
+﻿body {
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 5rem;
+}
+
+a.navbar-brand {
     white-space: normal;
     text-align: center;
-    word-break: break-all;
 }
 
 a {

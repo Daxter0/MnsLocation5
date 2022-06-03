@@ -49,14 +49,17 @@ namespace MnsLocation5.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
+            [Display(Name = "E-mail")]
+
             public string Email { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
             [Display(Name = "Mot de passe")]
+
             public string Password { get; set; }
 
-            [Display(Name = "Se souvenir de moi ?")]
+            [Display(Name = "Se souvenir de moi")]
             public bool RememberMe { get; set; }
         }
 
