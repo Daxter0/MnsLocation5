@@ -9,9 +9,7 @@ namespace MnsLocation5.Models
     public class Material
     {
         public int Id { get; set; }
-
         public List<RentalCart> Cart { get; set; }
-
         public int TypeRefId { get; set; }
 
         [ForeignKey("TypeRefId")]
