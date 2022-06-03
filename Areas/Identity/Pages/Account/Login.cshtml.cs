@@ -101,7 +101,7 @@ namespace MnsLocation5.Areas.Identity.Pages.Account
                     {
                         if (role == "Admin")
                         {
-                            returnUrl ??= Url.Content("~/Admin/Views/AdminHomePage");
+                            returnUrl ??= Url.Content("~/Admin/Views/AdminHomePage3");
                         }
                         else
                         {
