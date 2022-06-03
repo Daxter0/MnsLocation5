@@ -12,6 +12,7 @@ using System.IdentityModel;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using MnsLocation5.Areas.Identity.Pages.Account.Manage;
+using System.Linq;
 
 namespace MnsLocation5.Areas.Admin.Controllers
 {
@@ -24,16 +25,13 @@ namespace MnsLocation5.Areas.Admin.Controllers
         private readonly UserManager<User> _userManager;
         private readonly AppDbContext _context;
         private readonly SignInManager<User> _signInManager;
-
         public ViewsController(ILogger<ViewsController> logger, UserManager<User> userManager, AppDbContext context, SignInManager<User> signInManager)
         {
             _logger = logger;
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
-
         }
-
 
         public IActionResult AdminHomePage3()
         {
@@ -57,9 +55,12 @@ namespace MnsLocation5.Areas.Admin.Controllers
         {
             return View();
         }
-        public IActionResult AdminAccountIndex()
+        public async Task<IActionResult> AdminAccountIndex()
         {
-            var users =_userManager.Users;
+
+            //var admin = await _signInManager.UserManager.GetUserAsync(User);
+            //await _signInManager.RefreshSignInAsync(admin);
+            var users = _userManager.Users;
             return View(users);
         }
 
@@ -84,12 +85,21 @@ namespace MnsLocation5.Areas.Admin.Controllers
             return RedirectToAction("AdminAccountIndex");
         }
 
-        public async Task UpdateUserDetails(string id)
+        public async Task<IActionResult> UpdateUserDetails(string id)
         {
-            IndexModel i = new IndexModel(_userManager, _signInManager);
-            await i.Index(id);
-            
+            if (id == null)
+            {
+                NotFound();
+            }
 
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                NotFound();
+            }
+            await _signInManager.RefreshSignInAsync(user);
+
+            return LocalRedirect("/Identity/Account/Manage/Index");
         }
     }
 }

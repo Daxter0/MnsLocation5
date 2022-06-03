@@ -2,63 +2,157 @@
 @using MnsLocation5.Models
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MnsLocation5</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/MnsLocation5.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/AdminLayout.css" asp-append-version="true" />
-</head>
-<body class ="bgAdminPage">
-    <header>
-        <nav class="navbar navbar-expand-lg MainNavigation">
-          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <a asp-area="Admin" asp-controller="Views" asp-action="AdminHomePage3"  class="navbar-brand ">Accueil</a>
+@{
+    var user = await SignInManager.UserManager.GetUserAsync(User);
+    var userRoles = await SignInManager.UserManager.GetRolesAsync(user);
+    foreach(String userRole in userRoles)
+    {
+        if (userRole == "Borrower")
+        {
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <title>@ViewData["Title"] - MnsLocation5</title>
+                <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+                <link rel="stylesheet" href="~/css/LayoutForAllPages.css" asp-append-version="true" />
+                <link rel="stylesheet" href="~/MnsLocation5.styles.css" asp-append-version="true" />
+            </head>
+            <body>
+                <header>
+                    <nav class="navbar navbar-expand-lg MainNavigation">
+                      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+                      <a asp-area="Borrower" asp-controller="GeneralsView" asp-action="UserHomePage2" class="navbar-brand ">Accueil</a>
 
-          <div class="collapse navbar-collapse col-2 " id="navbarTogglerDemo02">
-            <ul class="navbar-nav mr-auto mt-2 mt-md-0">
-              <li class="nav-item active">
-                <a class="nav-link NotificationNav material-symbols-outlined"  href="#!">notifications<span class="sr-only">(current)</span></a>
-              </li>              
-            </ul>
-          </div>
-          <div class="d-flex justify-content-center col-7 mr-2">
-            <img src="~/Images/MNS sans fond.png" />
-          </div>
-          <div class="d-flex justify-content-end col-2">
-              <a class="navbar-brand d-flex justify-content-end">@UserManager.GetUserName(User)</a>
-              @{
-                   if (User.Identity.IsAuthenticated)
-                   {
-                        <form class="navbar-brand d-flex justify-content-end" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/Identity/Account/Login" method="post">
-                            <button type="submit" class="nav-link btn btn-link text-dark">Se déconnecter</button>
-                        </form>
-                   }
-               }
-          </div>
-        </nav>        
-    </header>
+                      <div class="collapse navbar-collapse col-2 " id="navbarTogglerDemo02">
+                        <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+                          <li class="nav-item active">
+                            <a class="nav-link NotificationNav" href="#!">Notifications<span class="sr-only">(current)</span></a>
+                          </li>
+                          <li class="nav-item">
+                            <a asp-area="Borrower" asp-controller="GeneralsView" asp-action="UserLocationCart7" class="nav-link">Panier</a>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="d-flex justify-content-center col-7 mr-2">
+                        <a asp-area="Borrower" asp-controller="GeneralsView" asp-action="UserHomePage2"><img src="~/Images/MNS sans fond.png" /></a>   
+                      </div>
+                      <div class="d-flex justify-content-end col-2">
+                          <a asp-area="Identity" asp-page="/Account/Manage/Index" asp-route-returnUrl="/Identity/Account/Manage/Index" class="navbar-brand d-flex p-0 justify-content-end">@UserManager.GetUserName(User)</a>
+                          @{
+                               if (User.Identity.IsAuthenticated)
+                               {
+                                    <form class="navbar-brand d-flex justify-content-end" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/Identity/Account/Login" method="post">
+                                        <button type="submit" class="nav-link btn btn-link text-white">Se déconnecter</button>
+                                    </form>
+                               }
+                           }
+                      </div>
+                    </nav>
+                    <nav class="navbar navbar-expand-lg LocationNavigation">
+                      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+                      <a asp-area="Borrower" asp-controller="GeneralsView" asp-action="UserLocationInformation6" class="nav-link col-4" >Mes locations</a>
+                      <a asp-area="Borrower" asp-controller="GeneralsView" asp-action="UserLocationInformation6" class="nav-link col-4 d-flex justify-content-center" >Demande de location<span class="sr-only">(current)</span></a>
+                      <a asp-area="Borrower" asp-controller="GeneralsView" asp-action="UserLocationInformation6" class="nav-link col-4 d-flex justify-content-end" >Historique de location</a>
+                      @*<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                        <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+                          <li class="nav-item active">
+                            <a class="nav-link col-4" href="#!">Demande de location<span class="sr-only">(current)</span></a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link col-4" href="#!">Historique de location</a>
+                          </li>
+                        </ul>
+                      </div>*@
+                    </nav>
 
-    <div class="container ">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+                </header>
+                <div class="container">
+                    <main role="main" class="pb-3">
+                        @RenderBody()
+                    </main>
+                </div>
 
-    <footer class="border-top footer  text-muted">
-        <div class="container">
-            &copy; 2022 - MnsLocation
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
-</html>
+                <footer class="border-top footer text-muted">
+                    <div class="container">
+                        &copy; 2022 - MnsLocation
+                    </div>
+                </footer>
+                <script src="~/lib/jquery/dist/jquery.min.js"></script>
+                <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+                <script src="~/js/site.js" asp-append-version="true"></script>
+                @await RenderSectionAsync("Scripts", required: false)
+            </body>
+            </html>
+        }
+        else
+        {
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <title>@ViewData["Title"] - MnsLocation5</title>
+                <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+                <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+                <link rel="stylesheet" href="~/MnsLocation5.styles.css" asp-append-version="true" />
+                <link rel="stylesheet" href="~/css/AdminLayout.css" asp-append-version="true" />
+            </head>
+            <body class ="bgAdminPage">
+                <header>
+                    <nav class="navbar navbar-expand-lg MainNavigation">
+                      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+                      <a asp-area="Admin" asp-controller="Views" asp-action="AdminHomePage3"  class="navbar-brand ">Accueil</a>
+
+                      <div class="collapse navbar-collapse col-2 " id="navbarTogglerDemo02">
+                        <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+                          <li class="nav-item active">
+                            <a class="nav-link NotificationNav material-symbols-outlined"  href="#!">notifications<span class="sr-only">(current)</span></a>
+                          </li>              
+                        </ul>
+                      </div>
+                      <div class="d-flex justify-content-center col-7 mr-2">
+                        <img src="~/Images/MNS sans fond.png" />
+                      </div>
+                      <div class="d-flex justify-content-end col-2">
+                          <a class="navbar-brand d-flex justify-content-end">@UserManager.GetUserName(User)</a>
+                          @{
+                               if (User.Identity.IsAuthenticated)
+                               {
+                                    <form class="navbar-brand d-flex justify-content-end" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/Identity/Account/Login" method="post">
+                                        <button type="submit" class="nav-link btn btn-link text-dark">Se déconnecter</button>
+                                    </form>
+                               }
+                           }
+                      </div>
+                    </nav>        
+                </header>
+
+                <div class="container ">
+                    <main role="main" class="pb-3">
+                        @RenderBody()
+                    </main>
+                </div>
+
+                <footer class="border-top footer  text-muted">
+                    <div class="container">
+                        &copy; 2022 - MnsLocation
+                    </div>
+                </footer>
+                <script src="~/lib/jquery/dist/jquery.min.js"></script>
+                <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+                <script src="~/js/site.js" asp-append-version="true"></script>
+                @await RenderSectionAsync("Scripts", required: false)
+            </body>
+            </html>
+        }
+    }
+}
+
