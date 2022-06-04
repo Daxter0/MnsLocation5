@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MnsLocation5.Data;
 using MnsLocation5.Models;
+using MnsLocation5.ViewsModel;
 using System.Linq;
 
 namespace MnsLocation5.Areas.Borrower.Controllers
@@ -60,7 +61,9 @@ namespace MnsLocation5.Areas.Borrower.Controllers
         }
         public IActionResult IndexMaterial(MaterialType materialType)
         {
-            var model = _context.Types.Where(x => x.Id == materialType.Id).Single();
+            var model = new CreateMaterialViewModel();
+            model.MaterialType = _context.Types.Where(x => x.Id == materialType.Id).Single();
+            model.ListMaterial = _context.Materials.Where(x => x.Type.Name == model.MaterialType.Name).ToList();
             return View(model);
         }
     }
