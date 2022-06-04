@@ -17,7 +17,7 @@
     @foreach (var item in Model)
    {
        
-       <a asp-area="Borrower" asp-controller="GeneralsView" asp-action="IndexMaterial"  class="d-flex justify-content-center mt-4 rounded-pill p-2 shadow">@item.Name</a>
+       <a asp-area="Borrower" asp-controller="GeneralsView" asp-action="IndexMaterial" asp-route-id="@item.Id"  class="d-flex bg-light justify-content-center mt-4 rounded-pill p-2 shadow">@item.Name</a>
    }
 
 </div>
