@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MnsLocation5.Data;
 
 namespace MnsLocation5.Areas.Borrower.Controllers
 {
@@ -12,11 +13,16 @@ namespace MnsLocation5.Areas.Borrower.Controllers
     public class GeneralsViewController : Controller
     {
 
-        private readonly ILogger<GeneralsViewController> _logger;
+        //private readonly ILogger<GeneralsViewController> _logger;
+        private readonly AppDbContext _context;
 
-        public GeneralsViewController(ILogger<GeneralsViewController> logger)
+        //public GeneralsViewController(ILogger<GeneralsViewController> logger)
+        //{
+        //    _logger = logger;
+        //}
+        public GeneralsViewController(AppDbContext context)
         {
-            _logger = logger;
+            _context = context;
         }
         public IActionResult Index()
         {
@@ -25,7 +31,7 @@ namespace MnsLocation5.Areas.Borrower.Controllers
 
         public IActionResult UserHomePage2()
         {
-            return View();
+            return View(_context.Types);
         }
         public IActionResult UserAccountDetail9()
         {

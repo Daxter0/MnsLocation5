@@ -50,6 +50,22 @@ namespace MnsLocation5.Areas.Borrower
                 {
                     context.Types.Add(materialType);
                 }
+                RentValidation[] rentValidations = new RentValidation[]
+               {
+                    new RentValidation{}
+               };
+                foreach (RentValidation rentValidation in rentValidations)
+                {
+                    context.RentValidations.Add(rentValidation);
+                }
+                HistoricUser[] historicUsers = new HistoricUser[]
+             {
+                    new HistoricUser{}
+             };
+                foreach (HistoricUser historicUser in historicUsers)
+                {
+                    context.HistoricUsers.Add(historicUser);
+                }
 
             }
 

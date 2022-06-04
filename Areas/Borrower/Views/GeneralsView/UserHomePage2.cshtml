@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<MnsLocation5.Models.MaterialType>
+@{
     ViewData["Title"] = "UserHomePage";
     Layout = "~/Views/Shared/_LayoutUserPages.cshtml";
 }
@@ -6,12 +7,20 @@
 <div class="text-center">
     <h1 class="mt-4">Matériels disponibles</h1>
 </div>
-<div class="d-flex justify-content-center flex-column">
+@*<div class="d-flex justify-content-center flex-column">
     <button class=" d-flex justify-content-center mt-4 rounded-pill p-2 shadow">Caméra</button>
     <button class=" d-flex justify-content-center mt-4 rounded-pill p-2">Appareil photo</button>
     <button class=" d-flex justify-content-center mt-4 rounded-pill p-2">Casque VR</button>
     <button class=" d-flex justify-content-center mt-4 rounded-pill p-2">Microphone</button>
+</div>*@
+<div class="d-flex justify-content-center flex-column">
+    @foreach (var item in Model)
+   {
+       <button class=" d-flex justify-content-center mt-4 rounded-pill p-2 shadow">@item.Name</button>
+   }
 </div>
+
+
 @*@using MnsLocation5.Models
 @using Microsoft.AspNetCore.Identity
 @model IEnumerable<MnsLocation5.Models.User>
@@ -39,10 +48,10 @@
             @*<th>
                 @Html.DisplayNameFor()
 
-            </th>*@
-        </tr>
+            </th>*
+      @  </tr>
     </thead>
-    <tbody>
+    <tbody>*@
 @*@foreach (var item in Model) {
         <tr>
             <td>

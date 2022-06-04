@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace MnsLocation5.Models
 {
@@ -7,6 +8,8 @@ namespace MnsLocation5.Models
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string Adress { get; set; }
+
+        public ICollection<HistoricUser> HistoricModification { get; set; }
 
     }
 }
