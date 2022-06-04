@@ -20,22 +20,16 @@
                 <span asp-validation-for="MaterialTypeID" class="text-danger"></span>
             </div>
             <div class="form-group">
-              <label asp-for="MaterialType" class="control-lable"></label>
+              <label asp-for="Material.Type" class="control-lable"></label>
               <select asp-for="MaterialTypeID" asp-items="Model.ListType" class="custom-select">
 
               </select>
-            </div>
-            
+            </div>            
             <div class="form-group">
                 <label asp-for="Material.Condition" class="control-label"></label>
-                <input asp-for="Material.Condition" class="form-control" />
-                <span asp-validation-for="Material.Condition" class="text-danger"></span>
+                <select asp-for="Material.Condition" asp-items="Model.ListConditions" class="custom-select" ></select>
             </div>
-            <div class="form-group">
-                <label asp-for="Material.Statut" class="control-label"></label>
-                <input asp-for="Material.Statut" class="form-control" />
-                <span asp-validation-for="Material.Statut" class="text-danger"></span>
-            </div>
+            
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

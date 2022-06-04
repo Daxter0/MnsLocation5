@@ -13,11 +13,13 @@
     <button class=" d-flex justify-content-center mt-4 rounded-pill p-2">Casque VR</button>
     <button class=" d-flex justify-content-center mt-4 rounded-pill p-2">Microphone</button>
 </div>*@
-<div class="d-flex justify-content-center flex-column">
+<div class="d-flex justify-content-center flex-column normalLink">
     @foreach (var item in Model)
    {
-       <button class=" d-flex justify-content-center mt-4 rounded-pill p-2 shadow">@item.Name</button>
+       
+       <a asp-area="Borrower" asp-controller="GeneralsView" asp-action="IndexMaterial"  class="d-flex justify-content-center mt-4 rounded-pill p-2 shadow">@item.Name</a>
    }
+
 </div>
 
 

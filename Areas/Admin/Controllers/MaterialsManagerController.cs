@@ -53,7 +53,14 @@ namespace MnsLocation5.Areas.Admin.Controllers
         {
             var model = new CreateMaterialViewModel();
             model.ListType = _context.Types.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Name }).ToList();
-            
+            model.ListConditions = new List<SelectListItem>()
+            {
+                new SelectListItem { Text="Neuf", Value="Neuf"},
+                new SelectListItem { Text="Bon état", Value="Bon état"},
+                new SelectListItem { Text="Moyen état", Value="Moyen état"},
+                new SelectListItem { Text="Mauvais état", Value="Mauvais état"},
+                new SelectListItem { Text="Cassé", Value="Cassé"}
+            };
             return View(model);
         }
 
@@ -67,7 +74,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
         {
             if (ModelState.IsValid) //mettre un point d'arret ici afin de voir ce que recup material
             {
-                Material material = new Material() { Name = createMaterial.Material.Name, TypeRefId = createMaterial.MaterialTypeID, Condition = createMaterial.Material.Condition, Statut = createMaterial.Material.Statut };
+                Material material = new Material() { Name = createMaterial.Material.Name, TypeRefId = createMaterial.MaterialTypeID, Condition = createMaterial.Material.Condition};
                 _context.Add(material);                
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

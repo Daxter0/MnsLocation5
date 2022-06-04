@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MnsLocation5.Data;
+using MnsLocation5.Models;
 
 namespace MnsLocation5.Areas.Borrower.Controllers
 {
@@ -13,17 +15,18 @@ namespace MnsLocation5.Areas.Borrower.Controllers
     public class GeneralsViewController : Controller
     {
 
-        //private readonly ILogger<GeneralsViewController> _logger;
+        private readonly ILogger<GeneralsViewController> _logger;
+        private readonly UserManager<User> _userManager;
         private readonly AppDbContext _context;
-
-        //public GeneralsViewController(ILogger<GeneralsViewController> logger)
-        //{
-        //    _logger = logger;
-        //}
-        public GeneralsViewController(AppDbContext context)
+        private readonly SignInManager<User> _signInManager;
+        public GeneralsViewController(ILogger<GeneralsViewController> logger, UserManager<User> userManager, AppDbContext context, SignInManager<User> signInManager)
         {
+            _logger = logger;
+            _userManager = userManager;
+            _signInManager = signInManager;
             _context = context;
         }
+       
         public IActionResult Index()
         {
             return View();
@@ -51,6 +54,10 @@ namespace MnsLocation5.Areas.Borrower.Controllers
             return View();
         }
         public IActionResult UserLocationInformation6()
+        {
+            return View();
+        }
+        public IActionResult IndexMaterial()
         {
             return View();
         }
