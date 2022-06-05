@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using MnsLocation5.Areas.Identity.Pages.Account.Manage;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 
 namespace MnsLocation5.Areas.Admin.Controllers
 {
@@ -55,7 +56,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> AdminAccountIndex()
+        public IActionResult AdminAccountIndex()
         {
 
             //var admin = await _signInManager.UserManager.GetUserAsync(User);
@@ -97,9 +98,45 @@ namespace MnsLocation5.Areas.Admin.Controllers
             {
                 NotFound();
             }
-            await _signInManager.RefreshSignInAsync(user);
 
-            return LocalRedirect("/Identity/Account/Manage/Index");
+            //await _signInManager.RefreshSignInAsync(user);
+
+            //return LocalRedirect("/Identity/Account/Manage/Index");
+
+            return View(user);
+        }
+
+        /// <summary>
+        /// Sauvegarde les modifications d'un compte effectuées par l'admin
+        /// </summary>
+        /// <param name="form"></param>
+        /// <returns></returns>
+        
+        [HttpPost]
+        public async Task<IActionResult> Save(IFormCollection form)
+        {
+            // Stockage des entrées de l'administrateur
+
+            string userNameInput = form["UserNameInput"];
+            string firstNameInput = form["FirstNameInput"];
+            string lastNameInput = form["lastNameInput"];
+            string adressInput = form["adressInput"];
+            string phoneNumberInput = form["phoneNumberInput"];
+
+            var user = await _context.Users.Where(x => x.UserName == userNameInput).FirstOrDefaultAsync(); // Recherche de l'utilisateur qui va être modifié dans la base de donnée
+            
+            // Modifications de ses propriétés
+
+            user.FirstName = firstNameInput;
+            user.LastName = lastNameInput;
+            user.Adress = adressInput;
+            user.PhoneNumber = phoneNumberInput;
+
+            await _userManager.UpdateAsync(user); 
+
+            var users = _userManager.Users;
+            
+            return View("AdminAccountIndex", users);
         }
     }
 }

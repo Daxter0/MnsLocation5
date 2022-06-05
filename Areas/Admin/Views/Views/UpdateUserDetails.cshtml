@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model User
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@{
+    Layout = "~/Views/Shared/_LayoutForAdmin.cshtml";
+}
+
+<h4>@ViewData["Title"]</h4>
+@*<partial name="_StatusMessage" model="Model.StatusMessage" />*@
+<div class="row">
+    <div class="col-md-6">
+        <form id="profile-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserName"></label>
+                <input name="UserNameInput" asp-for="UserName" class="form-control"  />
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstName"></label>
+                <input name="FirstNameInput" asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName"></label>
+                <input name="LastNameInput" asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Adress"></label>
+                <input name="AdressInput" asp-for="Adress" class="form-control" />
+                <span asp-validation-for="Adress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber">Numéro de téléphone</label>
+                <input name="PhoneNumberInput" asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <button asp-action="Save" id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+
+

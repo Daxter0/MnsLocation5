@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MnsLocation5.Models;
+using System;
 
 namespace MnsLocation5.Data
 {
@@ -29,5 +30,6 @@ namespace MnsLocation5.Data
 
 
         }
+
     }
 }
