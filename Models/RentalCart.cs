@@ -10,5 +10,8 @@ namespace MnsLocation5.Models
         public string UserRefId { get; set; }
         [ForeignKey("UserRefId")]
         public User User { get; set; }
+
+       
     }
+
 }

@@ -72,7 +72,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
         
         public async Task<IActionResult> Create(CreateMaterialViewModel createMaterial)
         {
-            if (ModelState.IsValid) //mettre un point d'arret ici afin de voir ce que recup material
+            if (ModelState.IsValid) 
             {
                 Material material = new Material() { Name = createMaterial.Material.Name, TypeRefId = createMaterial.MaterialTypeID, Condition = createMaterial.Material.Condition};
                 _context.Add(material);                

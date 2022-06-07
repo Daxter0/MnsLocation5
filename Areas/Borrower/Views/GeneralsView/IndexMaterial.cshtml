@@ -18,12 +18,15 @@
 @foreach (var item in Model.ListMaterial) {
         <tr>
             <td>
+                <input type ="checkbox" class="checkbox" value="@item.Id">
+            </td>
+            <td>
                 @item.Name
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="AddMaterialInRentalCart" asp-route-id="@item.Id">Ajoutez au panier</a>
             </td>
         </tr>
 }

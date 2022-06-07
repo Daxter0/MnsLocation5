@@ -6,6 +6,8 @@ using MnsLocation5.Data;
 using MnsLocation5.Models;
 using MnsLocation5.ViewsModel;
 using System.Linq;
+using System.Threading.Tasks;
+
 
 namespace MnsLocation5.Areas.Borrower.Controllers
 {
@@ -48,6 +50,8 @@ namespace MnsLocation5.Areas.Borrower.Controllers
         }
         public IActionResult UserLocationCart7()
         {
+            //var model = new RentalCartViewModel();
+            //model.ChoosenMaterial = _context.R
             return View();
         }
 
@@ -65,6 +69,32 @@ namespace MnsLocation5.Areas.Borrower.Controllers
             model.MaterialType = _context.Types.Where(x => x.Id == materialType.Id).Single();
             model.ListMaterial = _context.Materials.Where(x => x.Type.Name == model.MaterialType.Name).ToList();
             return View(model);
+        }
+
+        public async Task<IActionResult> AddMaterialInRentalCart(Material material)
+        {
+            //TODO (possible erreur dans le mcd)
+            var user = _userManager.GetUserId(User);
+            var model = new RentalCartViewModel();
+            model.Cart = _context.RentalCarts.Where(x => x.UserRefId == user).FirstOrDefault();
+            if (model.Cart == null)
+            {
+                RentalCart cart = new RentalCart()
+                {
+                    UserRefId = user
+
+                };
+                _context.Add(cart);
+                await _context.SaveChangesAsync();
+            }
+            model.Cart = _context.RentalCarts.Where(x => x.UserRefId == user).FirstOrDefault();
+            model.ChoosenMaterial.Add(material);
+            
+            _context.Add(model);
+
+
+            await _context.SaveChangesAsync();
+            return View("IndexMaterial");
         }
     }
 }

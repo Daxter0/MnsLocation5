@@ -1,8 +1,33 @@
-﻿@{
+﻿@model MnsLocation5.ViewsModel.RentalCartViewModel
+
+@{
     ViewData["Title"] = "UserLocationCart";
+    Layout = "~/Views/Shared/_LayoutUserPages.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">UserLocationCart</h1>
-    <p>User cart</p>
-</div>
+
+
+<h1>Panier</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Materiel Choisi</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ChoosenMaterial) {
+        <tr>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @*<a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>*@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -10,6 +10,7 @@ namespace MnsLocation5.Models
         public string Adress { get; set; }
 
         public ICollection<HistoricUser> HistoricModification { get; set; }
+        public RentalCart CartOfUser { get; set; }
 
     }
 }
