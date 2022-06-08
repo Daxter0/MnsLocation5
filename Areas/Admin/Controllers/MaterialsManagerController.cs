@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -70,12 +71,25 @@ namespace MnsLocation5.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         
-        public async Task<IActionResult> Create(CreateMaterialViewModel createMaterial)
+        public async Task<IActionResult> Create(CreateMaterialViewModel createMaterial, IFormCollection form)
         {
+            string materialQuantityInput = form["NewMaterialQuantity"];
+            int materialQuantity = 1;
+            try
+            {
+                materialQuantity = int.Parse(materialQuantityInput);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
             if (ModelState.IsValid) //mettre un point d'arret ici afin de voir ce que recup material
             {
-                Material material = new Material() { Name = createMaterial.Material.Name, TypeRefId = createMaterial.MaterialTypeID, Condition = createMaterial.Material.Condition};
-                _context.Add(material);                
+                for(int i = 0 ; i < materialQuantity ; i++)
+                {
+                    Material material = new Material() { Name = createMaterial.Material.Name, TypeRefId = createMaterial.MaterialTypeID, Condition = createMaterial.Material.Condition };
+                    _context.Add(material);
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
