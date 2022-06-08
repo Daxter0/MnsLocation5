@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MnsLocation5.Migrations
 {
-    public partial class AddingIdentity : Migration
+    public partial class Versionning101 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,10 +26,10 @@ namespace MnsLocation5.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(256)", nullable: true),
-                    FirstName = table.Column<string>(type: "nvarchar(256)", nullable: true),
-                    Adress = table.Column<string>(type: "nvarchar(256)", nullable: true),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Adress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -51,28 +51,16 @@ namespace MnsLocation5.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RentalCarts",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RentalCarts", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Type",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Type", x => x.ID);
+                    table.PrimaryKey("PK_Type", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -121,8 +109,8 @@ namespace MnsLocation5.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -166,8 +154,8 @@ namespace MnsLocation5.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -182,25 +170,86 @@ namespace MnsLocation5.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Rents",
+                name: "HistoricUser",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DateOfModification = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModificationLocation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModificationValue = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HistoricUser", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_HistoricUser_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Rent",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    UserRefId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     RentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    RentalCartID = table.Column<int>(type: "int", nullable: true),
                     Reason = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RentalStart = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RentalEnd = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rents", x => x.ID);
+                    table.PrimaryKey("PK_Rent", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Rents_RentalCarts_RentalCartID",
-                        column: x => x.RentalCartID,
-                        principalTable: "RentalCarts",
-                        principalColumn: "ID",
+                        name: "FK_Rent_AspNetUsers_UserRefId",
+                        column: x => x.UserRefId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RentalCart",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserRefId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RentalCart", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_RentalCart_AspNetUsers_UserRefId",
+                        column: x => x.UserRefId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RentValidation",
+                columns: table => new
+                {
+                    RentId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ValidationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AdminId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RentValidation", x => x.RentId);
+                    table.ForeignKey(
+                        name: "FK_RentValidation_AspNetUsers_AdminId",
+                        column: x => x.AdminId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -208,22 +257,36 @@ namespace MnsLocation5.Migrations
                 name: "Material",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MaterialTypeID = table.Column<int>(type: "int", nullable: true),
+                    TypeRefId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Condition = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Statut = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Statut = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RentID = table.Column<int>(type: "int", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Material", x => x.ID);
+                    table.PrimaryKey("PK_Material", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Material_Type_MaterialTypeID",
-                        column: x => x.MaterialTypeID,
-                        principalTable: "Type",
+                        name: "FK_Material_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Material_Rent_RentID",
+                        column: x => x.RentID,
+                        principalTable: "Rent",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Material_Type_TypeRefId",
+                        column: x => x.TypeRefId,
+                        principalTable: "Type",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -231,21 +294,21 @@ namespace MnsLocation5.Migrations
                 columns: table => new
                 {
                     CartID = table.Column<int>(type: "int", nullable: false),
-                    ChoosenMaterialsID = table.Column<int>(type: "int", nullable: false)
+                    ChoosenMaterialsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MaterialRentalCart", x => new { x.CartID, x.ChoosenMaterialsID });
+                    table.PrimaryKey("PK_MaterialRentalCart", x => new { x.CartID, x.ChoosenMaterialsId });
                     table.ForeignKey(
-                        name: "FK_MaterialRentalCart_Material_ChoosenMaterialsID",
-                        column: x => x.ChoosenMaterialsID,
+                        name: "FK_MaterialRentalCart_Material_ChoosenMaterialsId",
+                        column: x => x.ChoosenMaterialsId,
                         principalTable: "Material",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MaterialRentalCart_RentalCarts_CartID",
+                        name: "FK_MaterialRentalCart_RentalCart_CartID",
                         column: x => x.CartID,
-                        principalTable: "RentalCarts",
+                        principalTable: "RentalCart",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -290,19 +353,44 @@ namespace MnsLocation5.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Material_MaterialTypeID",
+                name: "IX_HistoricUser_UserId",
+                table: "HistoricUser",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Material_RentID",
                 table: "Material",
-                column: "MaterialTypeID");
+                column: "RentID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MaterialRentalCart_ChoosenMaterialsID",
+                name: "IX_Material_TypeRefId",
+                table: "Material",
+                column: "TypeRefId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Material_UserId",
+                table: "Material",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MaterialRentalCart_ChoosenMaterialsId",
                 table: "MaterialRentalCart",
-                column: "ChoosenMaterialsID");
+                column: "ChoosenMaterialsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rents_RentalCartID",
-                table: "Rents",
-                column: "RentalCartID");
+                name: "IX_Rent_UserRefId",
+                table: "Rent",
+                column: "UserRefId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RentalCart_UserRefId",
+                table: "RentalCart",
+                column: "UserRefId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RentValidation_AdminId",
+                table: "RentValidation",
+                column: "AdminId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -323,25 +411,31 @@ namespace MnsLocation5.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "HistoricUser");
+
+            migrationBuilder.DropTable(
                 name: "MaterialRentalCart");
 
             migrationBuilder.DropTable(
-                name: "Rents");
+                name: "RentValidation");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Material");
 
             migrationBuilder.DropTable(
-                name: "RentalCarts");
+                name: "RentalCart");
+
+            migrationBuilder.DropTable(
+                name: "Rent");
 
             migrationBuilder.DropTable(
                 name: "Type");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

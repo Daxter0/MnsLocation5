@@ -15,9 +15,7 @@ namespace MnsLocation5.Models
         public string Reason { get; set; }
         public DateTime RentalStart { get; set; }
         public DateTime RentalEnd { get; set; }
-        public int RentalCartRefId { get; set; }
-        [ForeignKey("RentalCartRefId")]
-        public RentalCart RentalCart { get; set; }      
+            
 
     }
 }

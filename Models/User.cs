@@ -9,6 +9,7 @@ namespace MnsLocation5.Models
         public string FirstName { get; set; }
         public string Adress { get; set; }
 
+        public List<Material> Cart { get; set; }
         public ICollection<HistoricUser> HistoricModification { get; set; }
 
     }
