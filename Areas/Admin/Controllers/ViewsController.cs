@@ -82,7 +82,12 @@ namespace MnsLocation5.Areas.Admin.Controllers
             {
                 NotFound();
             }
+            int rentalCartRefId = user.UserRentalCartRefId;
+            var rentalCart = _context.RentalCarts.Where(r => r.ID == rentalCartRefId).Single();
+            _context.RentalCarts.Remove(rentalCart);
             await _userManager.DeleteAsync(user);
+            
+            await _context.SaveChangesAsync();
             return RedirectToAction("AdminAccountIndex");
         }
 

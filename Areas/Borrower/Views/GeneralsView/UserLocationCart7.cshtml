@@ -1,8 +1,39 @@
-﻿@{
+﻿@model MnsLocation5.Models.User
+
+@{
     ViewData["Title"] = "UserLocationCart";
 }
 
-<div class="text-center">
-    <h1 class="display-4">UserLocationCart</h1>
-    <p>User cart</p>
-</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Matériels choisis
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Condition)
+            </th>*@
+           
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.RentalCart.ChoosenMaterials) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Condition)
+            </td>
+            
+            <td>
+                @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

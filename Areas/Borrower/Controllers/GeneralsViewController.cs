@@ -5,7 +5,9 @@ using Microsoft.Extensions.Logging;
 using MnsLocation5.Data;
 using MnsLocation5.Models;
 using MnsLocation5.ViewsModel;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MnsLocation5.Areas.Borrower.Controllers
 {
@@ -65,6 +67,20 @@ namespace MnsLocation5.Areas.Borrower.Controllers
             model.MaterialType = _context.Types.Where(x => x.Id == materialType.Id).Single();
             model.ListMaterial = _context.Materials.Where(x => x.Type.Name == model.MaterialType.Name).ToList();
             return View(model);
+        }
+
+        public async Task<IActionResult> AddToRentalCart(int id)
+        {
+            var material = _context.Materials.FirstOrDefault(x => x.Id == id);
+            var user = await _userManager.GetUserAsync(User);
+            var model = new UserRentalCartViewModel(user, user.RentalCart);
+
+
+            user.RentalCart.ChoosenMaterials.Add(material);
+
+            model.ChoosenMaterials.Add(material);
+
+            return View("UserLocationCart7", user);
         }
     }
 }
