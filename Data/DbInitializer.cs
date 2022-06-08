@@ -12,8 +12,15 @@ namespace MnsLocation5.Areas.Borrower
         {
             if (context.Database.EnsureCreated())
             {
-                
+                RentalCart[] rentalCarts = new RentalCart[]
+                {
+                new RentalCart{}
 
+                };
+                foreach (RentalCart rentalCart in rentalCarts)
+                {
+                    context.RentalCarts.Add(rentalCart);
+                }
                 Rent[] rents = new Rent[]
                 {
                 new Rent{}

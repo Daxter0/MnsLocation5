@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MnsLocation5.Models
 {
@@ -8,8 +9,9 @@ namespace MnsLocation5.Models
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string Adress { get; set; }
-
-        public List<Material> Cart { get; set; }
+        public int UserRentalCartRefId { get; set; }
+        [ForeignKey("UserRentalCartRefId")]
+        public RentalCart RentalCart { get; set; }
         public ICollection<HistoricUser> HistoricModification { get; set; }
 
     }

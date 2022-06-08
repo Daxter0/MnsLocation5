@@ -10,6 +10,7 @@ namespace MnsLocation5.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Material> Materials { get; set; }
         public DbSet<MaterialType> Types { get; set; }
+        public DbSet<RentalCart> RentalCarts { get; set; }
         public DbSet<Rent> Rents { get; set; }
         public DbSet<RentValidation> RentValidations { get; set; }
         public DbSet<HistoricUser> HistoricUsers { get; set; }
@@ -23,6 +24,7 @@ namespace MnsLocation5.Data
             modelBuilder.Entity<Material>().ToTable("Material");
             modelBuilder.Entity<MaterialType>().ToTable("Type");
             modelBuilder.Entity<Rent>().ToTable("Rent");
+            modelBuilder.Entity<RentalCart>().ToTable("RentalCart");
             modelBuilder.Entity<RentValidation>().ToTable("RentValidation");
             modelBuilder.Entity<HistoricUser>().ToTable("HistoricUser");
 

@@ -114,6 +114,7 @@ namespace MnsLocation5
                     name: "default",
                     pattern: "{controller=home}/{action=Index1}/{id?}"
                 );
+
             });
             CreateRoles(serviceProvider).Wait();
         }

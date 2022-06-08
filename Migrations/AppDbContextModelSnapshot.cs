@@ -19,21 +19,6 @@ namespace MnsLocation5.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("MaterialRentalCart", b =>
-                {
-                    b.Property<int>("CartID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ChoosenMaterialsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CartID", "ChoosenMaterialsId");
-
-                    b.HasIndex("ChoosenMaterialsId");
-
-                    b.ToTable("MaterialRentalCart");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -275,7 +260,7 @@ namespace MnsLocation5.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RentID")
+                    b.Property<int?>("RentalCartID")
                         .HasColumnType("int");
 
                     b.Property<string>("Statut")
@@ -284,16 +269,11 @@ namespace MnsLocation5.Migrations
                     b.Property<int>("TypeRefId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("RentID");
+                    b.HasIndex("RentalCartID");
 
                     b.HasIndex("TypeRefId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Material");
                 });
@@ -326,6 +306,9 @@ namespace MnsLocation5.Migrations
                     b.Property<DateTime>("RentDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("RentRentalCartRefId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("RentalEnd")
                         .HasColumnType("datetime2");
 
@@ -336,6 +319,8 @@ namespace MnsLocation5.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("RentRentalCartRefId");
 
                     b.HasIndex("UserRefId");
 
@@ -369,12 +354,7 @@ namespace MnsLocation5.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("UserRefId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("UserRefId");
 
                     b.ToTable("RentalCart");
                 });
@@ -392,22 +372,12 @@ namespace MnsLocation5.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserRentalCartRefId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("UserRentalCartRefId");
+
                     b.HasDiscriminator().HasValue("User");
-                });
-
-            modelBuilder.Entity("MaterialRentalCart", b =>
-                {
-                    b.HasOne("MnsLocation5.Models.RentalCart", null)
-                        .WithMany()
-                        .HasForeignKey("CartID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MnsLocation5.Models.Material", null)
-                        .WithMany()
-                        .HasForeignKey("ChoosenMaterialsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -472,9 +442,9 @@ namespace MnsLocation5.Migrations
 
             modelBuilder.Entity("MnsLocation5.Models.Material", b =>
                 {
-                    b.HasOne("MnsLocation5.Models.Rent", null)
+                    b.HasOne("MnsLocation5.Models.RentalCart", null)
                         .WithMany("ChoosenMaterials")
-                        .HasForeignKey("RentID");
+                        .HasForeignKey("RentalCartID");
 
                     b.HasOne("MnsLocation5.Models.MaterialType", "Type")
                         .WithMany("Materials")
@@ -482,18 +452,22 @@ namespace MnsLocation5.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MnsLocation5.Models.User", null)
-                        .WithMany("Cart")
-                        .HasForeignKey("UserId");
-
                     b.Navigation("Type");
                 });
 
             modelBuilder.Entity("MnsLocation5.Models.Rent", b =>
                 {
+                    b.HasOne("MnsLocation5.Models.RentalCart", "RentalCart")
+                        .WithMany("Rents")
+                        .HasForeignKey("RentRentalCartRefId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("MnsLocation5.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserRefId");
+
+                    b.Navigation("RentalCart");
 
                     b.Navigation("User");
                 });
@@ -507,13 +481,15 @@ namespace MnsLocation5.Migrations
                     b.Navigation("Admin");
                 });
 
-            modelBuilder.Entity("MnsLocation5.Models.RentalCart", b =>
+            modelBuilder.Entity("MnsLocation5.Models.User", b =>
                 {
-                    b.HasOne("MnsLocation5.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserRefId");
+                    b.HasOne("MnsLocation5.Models.RentalCart", "RentalCart")
+                        .WithMany("Users")
+                        .HasForeignKey("UserRentalCartRefId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("RentalCart");
                 });
 
             modelBuilder.Entity("MnsLocation5.Models.MaterialType", b =>
@@ -521,15 +497,17 @@ namespace MnsLocation5.Migrations
                     b.Navigation("Materials");
                 });
 
-            modelBuilder.Entity("MnsLocation5.Models.Rent", b =>
+            modelBuilder.Entity("MnsLocation5.Models.RentalCart", b =>
                 {
                     b.Navigation("ChoosenMaterials");
+
+                    b.Navigation("Rents");
+
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("MnsLocation5.Models.User", b =>
                 {
-                    b.Navigation("Cart");
-
                     b.Navigation("HistoricModification");
                 });
 #pragma warning restore 612, 618
