@@ -64,7 +64,7 @@ namespace MnsLocation5.Areas.Borrower
                 {
                     context.HistoricUsers.Add(historicUser);
                 }
-
+               
             }
 
             context.SaveChanges();

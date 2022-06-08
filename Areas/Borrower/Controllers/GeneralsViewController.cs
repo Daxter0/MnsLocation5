@@ -73,14 +73,17 @@ namespace MnsLocation5.Areas.Borrower.Controllers
         {
             var material = _context.Materials.FirstOrDefault(x => x.Id == id);
             var user = await _userManager.GetUserAsync(User);
-            var model = new UserRentalCartViewModel(user, user.RentalCart);
+            var cart = _context.RentalCarts.Where(x => x.ID == user.UserRentalCartRefId).Single();
 
 
-            user.RentalCart.ChoosenMaterials.Add(material);
+            cart.ChoosenMaterials.Add(material);
+            _context.SaveChanges();
 
-            model.ChoosenMaterials.Add(material);
-
-            return View("UserLocationCart7", user);
+            var model = new UserRentalCartViewModel();
+            var cartSave = _context.RentalCarts.Where(x => x.ID == user.UserRentalCartRefId).Single();
+            
+            //model.ChoosenMaterials = cartSave.ChoosenMaterials.Where(x => x.RentalCarts == );
+            return View("UserLocationCart7", model);
         }
     }
 }
