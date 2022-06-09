@@ -1,9 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using MnsLocation5.Data
-@using MnsLocation5.Models
-@using MnsLocation5.ViewsModel
-@model UserRentalCartViewModel
-
+﻿@model MnsLocation5.ViewsModel.UserRentalCartViewModel
 
 @{
     ViewData["Title"] = "UserLocationCart";
@@ -34,8 +29,9 @@
             </td>
             
             <td>
-                
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
+                <a asp-action="Delete" asp-route-id="@item.MaterialID">Delete</a>
             </td>
         </tr>
 }

@@ -13,11 +13,15 @@ namespace MnsLocation5.ViewsModel
         public ICollection<Material> ListMaterial { get; set; }
         public List<SelectListItem> ListType { get; set; }
         public List<SelectListItem> ListConditions { get; set; }
+        public List<SelectListItem> ListStatut { get; set; }
+
+
         public CreateMaterialViewModel()
         {
             Material = new Material();
             MaterialType = new MaterialType();
             ListType = new List<SelectListItem>();
+            ListStatut = new List<SelectListItem>();
         }
         public CreateMaterialViewModel(Material material, MaterialType materialType, List<SelectListItem> listType)
         {
