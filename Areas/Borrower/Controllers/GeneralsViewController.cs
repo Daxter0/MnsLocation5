@@ -48,8 +48,13 @@ namespace MnsLocation5.Areas.Borrower.Controllers
         {
             return View();
         }
-        public IActionResult UserLocationCart7()
+        public async Task<IActionResult> UserLocationCart7()
         {
+            UserRentalCartViewModel uRCVM = new UserRentalCartViewModel();
+            var user = await _userManager.GetUserAsync(User);
+            uRCVM.User = user;
+            uRCVM.RentalCart = _context.RentalCarts.Where(x => x.ID == user.UserRentalCartRefId).Single();
+
             return View();
         }
 
@@ -73,14 +78,13 @@ namespace MnsLocation5.Areas.Borrower.Controllers
         {
             var material = _context.Materials.FirstOrDefault(x => x.Id == id);
             var user = await _userManager.GetUserAsync(User);
-            var model = new UserRentalCartViewModel(user, user.RentalCart);
+            var cart = _context.RentalCarts.Where(x => x.ID == user.UserRentalCartRefId).Single();
 
+            //user.RentalCart.ChoosenMaterials.Add(material);
 
-            user.RentalCart.ChoosenMaterials.Add(material);
-
-            model.ChoosenMaterials.Add(material);
-
-            return View("UserLocationCart7", user);
+            cart.ChoosenMaterials.Add(material);
+            _context.SaveChanges();
+            return View("UserLocationCart7", cart);
         }
     }
 }

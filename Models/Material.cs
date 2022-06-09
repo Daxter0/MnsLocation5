@@ -10,11 +10,11 @@ namespace MnsLocation5.Models
     {
         public int Id { get; set; }
         public int TypeRefId { get; set; }
-
         [ForeignKey("TypeRefId")]
         public MaterialType Type { get; set; }
 
         [DisplayName("Nom")]
+        public ICollection<RentalCart> RentalCarts { get; set; }
         public string Name { get; set; }
         public string Condition { get; set; }
         public string Statut { get; set; }

@@ -1,4 +1,9 @@
-﻿@model MnsLocation5.Models.User
+﻿@using Microsoft.AspNetCore.Identity
+@using MnsLocation5.Data
+@using MnsLocation5.Models
+@using MnsLocation5.ViewsModel
+@model UserRentalCartViewModel
+
 
 @{
     ViewData["Title"] = "UserLocationCart";
@@ -18,7 +23,7 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.RentalCart.ChoosenMaterials) {
+@foreach (var item in Model.ChoosenMaterials) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)

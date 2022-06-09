@@ -11,7 +11,7 @@ namespace MnsLocation5.Models
         public string Adress { get; set; }
         public int UserRentalCartRefId { get; set; }
         [ForeignKey("UserRentalCartRefId")]
-        public RentalCart RentalCart { get; set; }
+        public RentalCart RentalCart { get; set; } = new RentalCart();
         public ICollection<HistoricUser> HistoricModification { get; set; }
 
     }
