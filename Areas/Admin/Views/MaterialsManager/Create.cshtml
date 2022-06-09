@@ -16,7 +16,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Material.Name" class="control-label"></label>
-                <input asp-for="Material.Name" class="form-control" />
+                <input name="MaterialName" asp-for="Material.Name" class="form-control" required/>
                 <span asp-validation-for="MaterialTypeID" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -31,7 +31,7 @@
             </div>
             <div class="form-group">
                 <label>Quantité</label>
-                <input name="NewMaterialQuantity" class="form-control" />
+                <input type="number" name="NewMaterialQuantity" class="form-control" required />
             </div>
             
             <div class="form-group">
