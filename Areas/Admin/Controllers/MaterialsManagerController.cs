@@ -40,7 +40,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
             }
 
             var material = await _context.Materials
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.MaterialID == id);
             if (material == null)
             {
                 return NotFound();
@@ -56,11 +56,16 @@ namespace MnsLocation5.Areas.Admin.Controllers
             model.ListType = _context.Types.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Name }).ToList();
             model.ListConditions = new List<SelectListItem>()
             {
-                new SelectListItem { Text="Neuf", Value="Neuf"},
-                new SelectListItem { Text="Bon état", Value="Bon état"},
-                new SelectListItem { Text="Moyen état", Value="Moyen état"},
-                new SelectListItem { Text="Mauvais état", Value="Mauvais état"},
-                new SelectListItem { Text="Cassé", Value="Cassé"}
+                new SelectListItem { Text="Neuf", Value="New"},
+                new SelectListItem { Text="Bon état", Value="Good Condition"},
+                new SelectListItem { Text="Moyen état", Value="Average Condition"},
+                new SelectListItem { Text="Mauvais état", Value="Bad Condition"},
+                new SelectListItem { Text="Cassé", Value="Broken"}
+            };
+            model.ListStatut = new List<SelectListItem>()
+            {
+                new SelectListItem{ Text="Disponible", Value ="Available" },
+                new SelectListItem{Text="Réservé", Value="Reserved"}
             };
             return View(model);
         }
@@ -87,7 +92,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
             {
                 for(int i = 0 ; i < materialQuantity ; i++)
                 {
-                    Material material = new Material() { Name = createMaterial.Material.Name, TypeRefId = createMaterial.MaterialTypeID, Condition = createMaterial.Material.Condition };
+                    Material material = new Material() { Name = createMaterial.Material.Name, TypeRefId = createMaterial.MaterialTypeID, Condition = createMaterial.Material.Condition, Statut=createMaterial.Material.Statut };
                     _context.Add(material);
                 }
                 await _context.SaveChangesAsync();
@@ -120,7 +125,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Type,Condition,Statut")] Material material)
         {
-            if (id != material.Id)
+            if (id != material.MaterialID)
             {
                 return NotFound();
             }
@@ -134,7 +139,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MaterialExists(material.Id))
+                    if (!MaterialExists(material.MaterialID))
                     {
                         return NotFound();
                     }
@@ -157,7 +162,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
             }
 
             var material = await _context.Materials
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.MaterialID == id);
             if (material == null)
             {
                 return NotFound();
@@ -179,7 +184,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
 
         private bool MaterialExists(int id)
         {
-            return _context.Materials.Any(e => e.Id == id);
+            return _context.Materials.Any(e => e.MaterialID == id);
         }
     }
 }

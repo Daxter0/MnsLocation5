@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MnsLocation5.Data;
 using MnsLocation5.Models;
@@ -48,9 +49,22 @@ namespace MnsLocation5.Areas.Borrower.Controllers
         {
             return View();
         }
-        public IActionResult UserLocationCart7()
+        public async Task<IActionResult> UserLocationCart7Async()
         {
-            return View();
+            var model = new UserRentalCartViewModel();
+            var user = await _userManager.GetUserAsync(User);
+            var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
+            
+            var list = _context.MaterialRentalCarts.Where(_x => _x.RentalCartID == cart.RentalCartID).ToList();//Get data from associative table
+            var listMaterial = new List<Material>();
+            foreach (var item in list)
+            {
+
+                var materialTest = _context.Materials.Where(x => x.MaterialID == item.MaterialID).FirstOrDefault();
+                listMaterial.Add(materialTest);
+            }
+            model.ChoosenMaterials = listMaterial;
+            return View(model);
         }
 
         public IActionResult UserLocationDetail11()
@@ -61,29 +75,34 @@ namespace MnsLocation5.Areas.Borrower.Controllers
         {
             return View();
         }
-        public IActionResult IndexMaterial(MaterialType materialType)
+        public IActionResult IndexMaterial(int id)
         {
             var model = new CreateMaterialViewModel();
-            model.MaterialType = _context.Types.Where(x => x.Id == materialType.Id).Single();
-            model.ListMaterial = _context.Materials.Where(x => x.Type.Name == model.MaterialType.Name).ToList();
-            return View(model);
+            model.MaterialType = _context.Types.Where(x => x.Id == id).Single();
+
+            var ListMaterial = _context.Materials.Where(x => x.Type.Name == model.MaterialType.Name).ToList();
+            model.ListMaterial = ListMaterial.Where(x => x.Statut == "Available").ToList();
+            
+            return View("IndexMaterial",model);
+            
         }
 
+        
         public async Task<IActionResult> AddToRentalCart(int id)
         {
-            var material = _context.Materials.FirstOrDefault(x => x.Id == id);
+
+            var material = _context.Materials.FirstOrDefault(x => x.MaterialID == id);
             var user = await _userManager.GetUserAsync(User);
-            var cart = _context.RentalCarts.Where(x => x.ID == user.UserRentalCartRefId).Single();
+            var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
 
 
             cart.ChoosenMaterials.Add(material);
             _context.SaveChanges();
+            var indexId = material.TypeRefId;
 
-            var model = new UserRentalCartViewModel();
-            var cartSave = _context.RentalCarts.Where(x => x.ID == user.UserRentalCartRefId).Single();
+            return RedirectToAction("IndexMaterial", new {id = indexId});
+
             
-            //model.ChoosenMaterials = cartSave.ChoosenMaterials.Where(x => x.RentalCarts == );
-            return View("UserLocationCart7", model);
         }
     }
 }

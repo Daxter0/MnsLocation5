@@ -8,7 +8,7 @@ namespace MnsLocation5.Models
 {
     public class Material
     {
-        public int Id { get; set; }
+        public int MaterialID { get; set; }
         public int TypeRefId { get; set; }
 
         [ForeignKey("TypeRefId")]

@@ -14,6 +14,7 @@ namespace MnsLocation5.Data
         public DbSet<Rent> Rents { get; set; }
         public DbSet<RentValidation> RentValidations { get; set; }
         public DbSet<HistoricUser> HistoricUsers { get; set; }
+        public DbSet<MaterialRentalCart> MaterialRentalCarts { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -27,7 +28,13 @@ namespace MnsLocation5.Data
             modelBuilder.Entity<RentalCart>().ToTable("RentalCart");
             modelBuilder.Entity<RentValidation>().ToTable("RentValidation");
             modelBuilder.Entity<HistoricUser>().ToTable("HistoricUser");
-
+            modelBuilder.Entity<Material>().HasMany(x => x.RentalCarts)
+                .WithMany(x => x.ChoosenMaterials)
+                .UsingEntity<MaterialRentalCart>(
+                    x => x.HasOne(x => x.RentalCart)
+                    .WithMany().HasForeignKey(x => x.RentalCartID),
+                    x => x.HasOne(x => x.Material)
+                   .WithMany().HasForeignKey(x => x.MaterialID));
 
         }
 

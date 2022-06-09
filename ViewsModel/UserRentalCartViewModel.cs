@@ -7,7 +7,7 @@ namespace MnsLocation5.ViewsModel
     {
         public User User { get; set; }
         public RentalCart RentalCart { get; set; }
-
+        public MaterialRentalCart MaterialRentalCart { get; set; }
         public List<Material> ChoosenMaterials { get; set; }
 
         public UserRentalCartViewModel()
