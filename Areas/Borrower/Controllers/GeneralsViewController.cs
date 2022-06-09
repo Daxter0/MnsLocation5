@@ -82,7 +82,20 @@ namespace MnsLocation5.Areas.Borrower.Controllers
 
             var ListMaterial = _context.Materials.Where(x => x.Type.Name == model.MaterialType.Name).ToList();
             model.ListMaterial = ListMaterial.Where(x => x.Statut == "Available").ToList();
-            
+            //TODO
+            foreach (var item in model.ListMaterial.ToList())
+            {
+                foreach (var item1 in _context.MaterialRentalCarts)
+                {
+                    if (item.MaterialID == item1.MaterialID)
+                    {
+                        model.ListMaterial.Remove(item);
+                    }
+                }
+            }
+
+
+
             return View("IndexMaterial",model);
             
         }
