@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace MnsLocation5.ViewsModel
 {
-    public class CreateMaterialViewModel
+    public class CreateMaterialViewModel 
     {
         public Material Material { get; set; }
         public int MaterialTypeID { get; set; }
@@ -14,7 +14,7 @@ namespace MnsLocation5.ViewsModel
         public List<SelectListItem> ListType { get; set; }
         public List<SelectListItem> ListConditions { get; set; }
         public List<SelectListItem> ListStatut { get; set; }
-
+        public List<List<Material>> ListOfListMaterials{ get; set; }
 
         public CreateMaterialViewModel()
         {
@@ -22,6 +22,7 @@ namespace MnsLocation5.ViewsModel
             MaterialType = new MaterialType();
             ListType = new List<SelectListItem>();
             ListStatut = new List<SelectListItem>();
+            ListOfListMaterials= new List<List<Material>>();
         }
         public CreateMaterialViewModel(Material material, MaterialType materialType, List<SelectListItem> listType)
         {
@@ -29,5 +30,7 @@ namespace MnsLocation5.ViewsModel
             MaterialType = materialType ?? throw new ArgumentNullException(nameof(materialType));
             ListType = listType ?? throw new ArgumentNullException(nameof(listType));
         }
+
+       
     }
 }

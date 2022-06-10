@@ -80,6 +80,19 @@ namespace MnsLocation5.Areas.Borrower.Controllers
             model.MaterialType = _context.Types.Where(x => x.Id == id).Single();
 
             await CheckCartUserAsync(model);
+            foreach (var item in model.ListMaterial.GroupBy(m => m.Name).Select(n => n.First()).ToList())
+            {
+                List<Material> materials = new List<Material>();
+
+                foreach (var item1 in model.ListMaterial)
+                {
+                    if(item.Name == item1.Name)
+                    {
+                        materials.Add(item1);
+                    }
+                }
+                model.ListOfListMaterials.Add(materials);
+            }
 
             return View("IndexMaterial",model);
             

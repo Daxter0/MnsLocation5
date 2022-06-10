@@ -11,18 +11,24 @@
             <th>
                 @Html.DisplayNameFor(model => model.MaterialType.Name)
             </th>
-            <th></th>
+            <th>
+                Quantité
+            </th>
+            <th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.ListMaterial) {
+@foreach (var item in Model.ListOfListMaterials) {
         <tr>
             <td>
-                @item.Name
+                @item[item.Count-1].Name
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.MaterialID">Details</a> |
-                <a asp-action="AddToRentalCart" asp-route-id="@item.MaterialID">Ajouter au panier</a>
+                @item.Count
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item[item.Count-1]."MaterialID">Details</a> |
+                <a asp-action="AddToRentalCart" asp-route-id="@item[item.Count-1].MaterialID">Ajouter au panier</a>
             </td>
         </tr>
 }
