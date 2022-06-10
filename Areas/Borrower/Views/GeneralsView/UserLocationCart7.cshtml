@@ -13,7 +13,12 @@
             @*<th>
                 @Html.DisplayNameFor(model => model.Condition)
             </th>*@
-           
+            @if(Model.RentalCart.IsValidate == true)
+            {
+              <th>
+                Panier en cours de validation par l'admin
+              </th>  
+            }
             <th></th>
         </tr>
     </thead>
@@ -37,4 +42,11 @@
 }
     </tbody>
 </table>
-<a asp-action="UserRentalCartValidation" >Valider le panier</a>
+@if(Model.RentalCart.IsValidate == false)
+{
+    <a asp-action="UserRentalCartValidation" >Valider le panier</a>
+}
+else
+{
+    <a asp-action="UserRentalCartModification">Modifier le panier</a>
+}

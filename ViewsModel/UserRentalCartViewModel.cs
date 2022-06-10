@@ -10,8 +10,8 @@ namespace MnsLocation5.ViewsModel
 
         public List<User> Users { get; set; } = new List<User>();
         public List<RentalCart> RentalCarts { get; set; } = new List<RentalCart>();
-        public RentalCart RentalCart { get; set; }
-        public MaterialRentalCart MaterialRentalCart { get; set; }
+        public RentalCart RentalCart { get; set; } = new RentalCart();
+        public MaterialRentalCart MaterialRentalCart { get; set; } = new MaterialRentalCart();
         public List<Material> ChoosenMaterials { get; set; } = new List<Material>();
 
         
