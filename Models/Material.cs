@@ -14,9 +14,10 @@ namespace MnsLocation5.Models
         public MaterialType Type { get; set; }
 
         [DisplayName("Nom")]
-        public ICollection<RentalCart> RentalCarts { get; set; }
         public string Name { get; set; }
         public string Condition { get; set; }
         public string Statut { get; set; }
+        public ICollection<RentalCart> RentalCarts { get; set; }
+
     }
 }
