@@ -12,6 +12,9 @@
                 @Html.DisplayNameFor(model => model.MaterialType.Name)
             </th>
             <th>
+                Condition
+            </th>
+            <th>
                 Quantité
             </th>
             <th>
@@ -22,6 +25,9 @@
         <tr>
             <td>
                 @item[item.Count-1].Name
+            </td>
+            <td>
+                @item[item.Count-1].Condition
             </td>
             <td>
                 @item.Count

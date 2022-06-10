@@ -51,7 +51,7 @@ namespace MnsLocation5.Areas.Borrower.Controllers
         }
         public async Task<IActionResult> UserLocationCart7Async()
         {
-            var model = new UserRentalCartViewModel();
+            var model = new CreateMaterialViewModel();
             var user = await _userManager.GetUserAsync(User);
             var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
             
@@ -62,7 +62,8 @@ namespace MnsLocation5.Areas.Borrower.Controllers
                 var materialTest = _context.Materials.Where(x => x.MaterialID == item.MaterialID).FirstOrDefault();
                 listMaterial.Add(materialTest);
             }
-            model.ChoosenMaterials = listMaterial;
+            model.ListMaterial = listMaterial;
+            Quantity(model);
             return View(model);
         }
 
@@ -80,19 +81,7 @@ namespace MnsLocation5.Areas.Borrower.Controllers
             model.MaterialType = _context.Types.Where(x => x.Id == id).Single();
 
             await CheckCartUserAsync(model);
-            foreach (var item in model.ListMaterial.GroupBy(m => m.Name).Select(n => n.First()).ToList())
-            {
-                List<Material> materials = new List<Material>();
-
-                foreach (var item1 in model.ListMaterial)
-                {
-                    if(item.Name == item1.Name)
-                    {
-                        materials.Add(item1);
-                    }
-                }
-                model.ListOfListMaterials.Add(materials);
-            }
+            Quantity(model);
 
             return View("IndexMaterial",model);
             
@@ -113,7 +102,14 @@ namespace MnsLocation5.Areas.Borrower.Controllers
 
             return RedirectToAction("IndexMaterial", new {id = indexId});
 
-            
+
+        }
+        public IActionResult DeleteInRentalCart(int id)
+        {
+            var materialInCart = _context.MaterialRentalCarts.Where(x => x.MaterialID == id).Single();
+            _context.MaterialRentalCarts.Remove(materialInCart);
+            _context.SaveChanges();
+            return RedirectToAction("UserLocationCart7");
         }
         public async Task CheckCartUserAsync(CreateMaterialViewModel model)
         {
@@ -141,7 +137,7 @@ namespace MnsLocation5.Areas.Borrower.Controllers
 
         public async Task<IActionResult> UserRentalCartValidation()
         {
-            UserRentalCartViewModel userRentalCartViewModel = new UserRentalCartViewModel();
+            CreateMaterialViewModel userRentalCartViewModel = new CreateMaterialViewModel();
             var user = await _userManager.GetUserAsync(User);
             var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
             cart.IsValidate = true;
@@ -150,5 +146,22 @@ namespace MnsLocation5.Areas.Borrower.Controllers
 
             return View("UserLocationCart7", userRentalCartViewModel);
         }
+        public void Quantity(CreateMaterialViewModel model)
+        {
+            foreach (var item in model.ListMaterial.GroupBy(m => new { m.Name, m.Condition }).Select(n => n.First()).ToList())
+            {
+                List<Material> materials = new List<Material>();
+
+                foreach (var item1 in model.ListMaterial)
+                {
+                    if (item.Name == item1.Name && item.Condition == item1.Condition)
+                    {
+                        materials.Add(item1);
+                    }
+                }
+                model.ListOfListMaterials.Add(materials);
+            }
+        }
+      
     }
 }
