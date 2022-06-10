@@ -75,26 +75,12 @@ namespace MnsLocation5.Areas.Borrower.Controllers
         {
             return View();
         }
-        public IActionResult IndexMaterial(int id)
+        public async Task<IActionResult> IndexMaterialAsync(int id)
         {
             var model = new CreateMaterialViewModel();
             model.MaterialType = _context.Types.Where(x => x.Id == id).Single();
 
-            var ListMaterial = _context.Materials.Where(x => x.Type.Name == model.MaterialType.Name).ToList();
-            model.ListMaterial = ListMaterial.Where(x => x.Statut == "Available").ToList();
-            //TODO
-            foreach (var item in model.ListMaterial.ToList())
-            {
-                foreach (var item1 in _context.MaterialRentalCarts)
-                {
-                    if (item.MaterialID == item1.MaterialID)
-                    {
-                        model.ListMaterial.Remove(item);
-                    }
-                }
-            }
-
-
+            await CheckCartUserAsync(model);
 
             return View("IndexMaterial",model);
             
@@ -116,6 +102,29 @@ namespace MnsLocation5.Areas.Borrower.Controllers
             return RedirectToAction("IndexMaterial", new {id = indexId});
 
             
+        }
+        public async Task CheckCartUserAsync(CreateMaterialViewModel model)
+        {
+            var ListMaterial = _context.Materials.Where(x => x.Type.Name == model.MaterialType.Name).ToList();
+            var listMaterialToTri = ListMaterial.Where(x => x.Statut == "Available").ToList(); //Keep material who's not reserved
+            //Second tri for material who are already in the cart user
+            model.ListMaterial = listMaterialToTri; //Copy for not risking to change the list while iterate            
+            var user = await _userManager.GetUserAsync(User);
+            var materialInUserRentalCart = _context.MaterialRentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).ToList(); // We take all object who are already in the cart user
+            var listWhoNotIndex = new List<Material>();
+            //Compare which material is already in the cart and in the index
+            foreach (var item in listMaterialToTri)
+            {
+                foreach (var item1 in materialInUserRentalCart)
+                {
+                    if (item.MaterialID == item1.MaterialID)
+                    {
+                        listWhoNotIndex.Add(item);
+                    }
+                }
+            }
+            model.ListMaterial.RemoveAll(item => listWhoNotIndex.Contains(item)); //remove item from index because it's already in the cart
+
         }
     }
 }
