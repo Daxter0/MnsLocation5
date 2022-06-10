@@ -28,13 +28,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Condition)
             </td>
-            
-            <td>
-                @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
-                @*<a asp-action="Delete" asp-route-id="@item.MaterialID">Delete</a>*@
-            </td>
         </tr>
 }
     </tbody>
 </table>
+
+<a asp-controller="Views" asp-action="LocationValidation" asp-route-model="@Model">Valider le panier</a>

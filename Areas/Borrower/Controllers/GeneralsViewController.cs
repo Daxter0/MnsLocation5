@@ -49,7 +49,7 @@ namespace MnsLocation5.Areas.Borrower.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> UserLocationCart7Async()
+        public async Task<IActionResult> UserLocationCart7()
         {
             var model = new CreateMaterialViewModel();
             var user = await _userManager.GetUserAsync(User);
@@ -64,6 +64,8 @@ namespace MnsLocation5.Areas.Borrower.Controllers
             }
             model.ListMaterial = listMaterial;
             Quantity(model);
+            model.RentalCart = cart; 
+            model.ChoosenMaterials = listMaterial;
             return View(model);
         }
 
@@ -141,10 +143,31 @@ namespace MnsLocation5.Areas.Borrower.Controllers
             var user = await _userManager.GetUserAsync(User);
             var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
             cart.IsValidate = true;
+
+            // Rent Instanciation 
+
+            Rent r = new Rent();
+
+            r.RentRentalCartRefId = user.UserRentalCartRefId;
+            r.RentDate = System.DateTime.Now;
+            r.UserRefId = user.Id;
+
+            _context.Rents.Add(r);
             _context.SaveChanges();
 
+            return RedirectToAction(nameof(UserLocationCart7));
+        }
 
-            return View("UserLocationCart7", userRentalCartViewModel);
+        public async Task<IActionResult> UserRentalCartModification()
+        {
+            UserRentalCartViewModel userRentalCartViewModel = new UserRentalCartViewModel();
+            var user = await _userManager.GetUserAsync(User);
+            var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
+            cart.IsValidate = false;
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(UserHomePage2));
+
         }
         public void Quantity(CreateMaterialViewModel model)
         {

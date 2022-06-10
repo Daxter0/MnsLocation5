@@ -165,6 +165,9 @@ namespace MnsLocation5.Areas.Admin.Controllers
         {
             UserRentalCartViewModel rentalViewModel = new UserRentalCartViewModel();
 
+            var rentalCart = _context.RentalCarts.Where(x => x.RentalCartID == id).FirstOrDefault();
+            var user = _context.Users.Where(u => u.UserRentalCartRefId == id).FirstOrDefault();
+
             List<MaterialRentalCart> rentalCarts = _context.MaterialRentalCarts.Where(m => m.RentalCartID == id).ToList();
 
             List<int> materialsId = new List<int>();
@@ -187,8 +190,20 @@ namespace MnsLocation5.Areas.Admin.Controllers
                 rentalViewModel.ChoosenMaterials.Add(material1);
             }
 
+            rentalViewModel.RentalCart = rentalCart;
+            rentalViewModel.User = user;
+
+
             return View("RentalCartDetails", rentalViewModel);
 
+        }
+
+        public async Task<IActionResult> LocationValidation(UserRentalCartViewModel model)
+        {
+            
+            
+
+            return RedirectToAction(nameof(AdminLocationValidation14));
         }
     }
 }
