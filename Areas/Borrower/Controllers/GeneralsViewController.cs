@@ -64,8 +64,8 @@ namespace MnsLocation5.Areas.Borrower.Controllers
             }
             model.ListMaterial = listMaterial;
             Quantity(model);
-            model.RentalCart = cart; 
-            model.ChoosenMaterials = listMaterial;
+            //model.RentalCart = cart; 
+            //model.ChoosenMaterials = listMaterial;
             return View(model);
         }
 
