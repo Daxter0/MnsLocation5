@@ -1,8 +1,36 @@
-﻿@{
+﻿@using MnsLocation5.ViewsModel
+@model UserRentalCartViewModel
+
+@{
     ViewData["Title"] = "AdminLocationValidation";
+    Layout = "~/Views/Shared/_LayoutForAdmin.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">AdminLocationValidation</h1>
-    <p>The page where admin will be able to validate an user cart</p>
-</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nom d'utilisateur
+            </th>
+            <th>
+                ID du panier
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Users) {
+        <tr>
+            <td>
+                @item.UserName
+            </td>
+            <td>
+                @item.UserRentalCartRefId
+            </td>
+            <td>
+                <a asp-action="UserRentalCartDetail" asp-route-id="@item.UserRentalCartRefId">Détails</a> |
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

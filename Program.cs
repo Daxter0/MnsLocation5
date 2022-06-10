@@ -38,10 +38,6 @@ namespace MnsLocation5
                 {
                     AppDbContext appDbContext = services.GetRequiredService<AppDbContext>();
                     DbInitializer.Initialize(appDbContext);
-                    //UserContext userContext = services.GetRequiredService<UserContext>();
-                    //DbUserInitializer.Initialize(userContext);
-                    //MnsLocation5Context mnsLocation5Context = services.GetRequiredService<MnsLocation5Context>();
-                    //DbInitializer.Initialize(mnsLocation5Context);
 
                 }
                 catch (Exception ex)

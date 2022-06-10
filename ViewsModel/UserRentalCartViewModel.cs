@@ -6,10 +6,13 @@ namespace MnsLocation5.ViewsModel
 {
     public class UserRentalCartViewModel
     {
-        public User User { get; set; }
+        public User User { get; set; } = new User();
+
+        public List<User> Users { get; set; } = new List<User>();
+        public List<RentalCart> RentalCarts { get; set; } = new List<RentalCart>();
         public RentalCart RentalCart { get; set; }
         public MaterialRentalCart MaterialRentalCart { get; set; }
-        public List<Material> ChoosenMaterials { get; set; }
+        public List<Material> ChoosenMaterials { get; set; } = new List<Material>();
 
         
     }

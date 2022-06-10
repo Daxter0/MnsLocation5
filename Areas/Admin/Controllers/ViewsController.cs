@@ -14,6 +14,8 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using MnsLocation5.Areas.Identity.Pages.Account.Manage;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
+using MnsLocation5.ViewsModel;
+using System.Collections.Generic;
 
 namespace MnsLocation5.Areas.Admin.Controllers
 {
@@ -49,7 +51,22 @@ namespace MnsLocation5.Areas.Admin.Controllers
 
         public IActionResult AdminLocationValidation14()
         {
-            return View();
+            UserRentalCartViewModel userRentalCartViewModel = new UserRentalCartViewModel();
+
+            List<User> userValidateRentalCart =  _context.Users.Where(u => u.RentalCart.IsValidate == true).ToList();
+
+            //List<RentalCart> rentalCarts = _context.RentalCarts.Where(r => r.IsValidate == true).ToList();
+            //foreach(RentalCart rentalCart in rentalCarts)
+            //{
+            //    userRentalCartViewModel.RentalCarts.Add(rentalCart);
+
+            //}
+            foreach (User user in userValidateRentalCart)
+            {
+                userRentalCartViewModel.Users.Add(user);
+            }
+
+            return View(userRentalCartViewModel);
         }
 
         public IActionResult AdminStockAccountManagement8()
@@ -142,6 +159,36 @@ namespace MnsLocation5.Areas.Admin.Controllers
             var users = _userManager.Users;
             
             return View("AdminAccountIndex", users);
+        }
+
+        public async Task<IActionResult> UserRentalCartDetail(int id)
+        {
+            UserRentalCartViewModel rentalViewModel = new UserRentalCartViewModel();
+
+            List<MaterialRentalCart> rentalCarts = _context.MaterialRentalCarts.Where(m => m.RentalCartID == id).ToList();
+
+            List<int> materialsId = new List<int>();
+
+            foreach(MaterialRentalCart materialRentalCart in rentalCarts)
+            {
+                materialsId.Add(materialRentalCart.MaterialID);
+            }
+
+            List<Material> materials = new List<Material>();
+
+            foreach(int materialId in materialsId)
+            {
+                var material = _context.Materials.FirstOrDefault(m => m.MaterialID == materialId);
+                materials.Add(material);
+            }
+
+            foreach(Material material1 in materials)
+            {
+                rentalViewModel.ChoosenMaterials.Add(material1);
+            }
+
+            return View("RentalCartDetails", rentalViewModel);
+
         }
     }
 }

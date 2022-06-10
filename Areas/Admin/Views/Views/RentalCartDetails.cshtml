@@ -1,7 +1,8 @@
-﻿@model MnsLocation5.ViewsModel.UserRentalCartViewModel
+﻿@using MnsLocation5.ViewsModel;
+@model UserRentalCartViewModel;
 
 @{
-    ViewData["Title"] = "UserLocationCart";
+    Layout = "~/Views/Shared/_LayoutForAdmin.cshtml";
 }
 
 <table class="table">
@@ -31,10 +32,9 @@
             <td>
                 @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
-                <a asp-action="Delete" asp-route-id="@item.MaterialID">Delete</a>
+                @*<a asp-action="Delete" asp-route-id="@item.MaterialID">Delete</a>*@
             </td>
         </tr>
 }
     </tbody>
 </table>
-<a asp-action="UserRentalCartValidation" >Valider le panier</a>

@@ -59,7 +59,6 @@ namespace MnsLocation5.Areas.Borrower.Controllers
             var listMaterial = new List<Material>();
             foreach (var item in list)
             {
-
                 var materialTest = _context.Materials.Where(x => x.MaterialID == item.MaterialID).FirstOrDefault();
                 listMaterial.Add(materialTest);
             }
@@ -103,6 +102,18 @@ namespace MnsLocation5.Areas.Borrower.Controllers
             return RedirectToAction("IndexMaterial", new {id = indexId});
 
             
+        }
+
+        public async Task<IActionResult> UserRentalCartValidation()
+        {
+            UserRentalCartViewModel userRentalCartViewModel = new UserRentalCartViewModel();
+            var user = await _userManager.GetUserAsync(User);
+            var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
+            cart.IsValidate = true;
+            _context.SaveChanges();
+
+
+            return View("UserLocationCart7", userRentalCartViewModel);
         }
     }
 }
