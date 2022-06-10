@@ -10,7 +10,7 @@ namespace MnsLocation5.ViewsModel
         public Material Material { get; set; }
         public int MaterialTypeID { get; set; }
         public MaterialType MaterialType { get; set; }
-        public ICollection<Material> ListMaterial { get; set; }
+        public List<Material> ListMaterial { get; set; }
         public List<SelectListItem> ListType { get; set; }
         public List<SelectListItem> ListConditions { get; set; }
         public List<SelectListItem> ListStatut { get; set; }
