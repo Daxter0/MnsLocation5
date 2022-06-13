@@ -1,5 +1,5 @@
 ﻿@using MnsLocation5.ViewsModel;
-@model UserRentalCartViewModel;
+@model CreateMaterialViewModel
 
 @{
     Layout = "~/Views/Shared/_LayoutForAdmin.cshtml";
@@ -33,4 +33,5 @@
     </tbody>
 </table>
 
-<a asp-controller="Views" asp-action="LocationValidation" asp-route-model="@Model">Valider le panier</a>
+<a asp-controller="Views" asp-action="LocationValidation" asp-route-id="@Model.User.Id">Valider le panier</a> |
+<a asp-controller="Views" asp-action="LocationRefuse" asp-route-id="@Model.User.Id">Refuser le panier</a>

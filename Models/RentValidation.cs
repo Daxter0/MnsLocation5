@@ -7,8 +7,9 @@ namespace MnsLocation5.Models
     public class RentValidation
     {
         [Key]
-        [ForeignKey("Rent")]
         public int RentId { get; set; }
+        [ForeignKey("RentId")]
+        public Rent Rent { get; set; }
         public DateTime ValidationDate { get; set; }
         public string AdminId { get; set; }
         [ForeignKey("AdminId")]

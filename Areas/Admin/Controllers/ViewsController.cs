@@ -163,7 +163,7 @@ namespace MnsLocation5.Areas.Admin.Controllers
 
         public async Task<IActionResult> UserRentalCartDetail(int id)
         {
-            UserRentalCartViewModel rentalViewModel = new UserRentalCartViewModel();
+            CreateMaterialViewModel rentalViewModel = new CreateMaterialViewModel();
 
             var rentalCart = _context.RentalCarts.Where(x => x.RentalCartID == id).FirstOrDefault();
             var user = _context.Users.Where(u => u.UserRentalCartRefId == id).FirstOrDefault();
@@ -198,11 +198,24 @@ namespace MnsLocation5.Areas.Admin.Controllers
 
         }
 
-        public async Task<IActionResult> LocationValidation(UserRentalCartViewModel model)
+        public async Task<IActionResult> LocationValidation(string id)
         {
-            
-            
+            RentValidation rV = new RentValidation();
+            var user = _context.Users.Where(u => u.Id == id).FirstOrDefault();
+            var admin = await _userManager.GetUserAsync(User);
+            var rent = _context.Rents.Where(r => r.UserRefId == user.Id).FirstOrDefault();
 
+            rV.ValidationDate = System.DateTime.Now;
+            rV.AdminId = admin.Id;
+            rV.RentId = rent.ID;
+
+            _context.RentValidations.Add(rV);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(AdminLocationValidation14));
+        }
+
+        public IActionResult LocationRefuse()
+        {
             return RedirectToAction(nameof(AdminLocationValidation14));
         }
     }

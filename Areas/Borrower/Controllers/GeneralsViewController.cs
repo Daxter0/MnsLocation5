@@ -64,8 +64,8 @@ namespace MnsLocation5.Areas.Borrower.Controllers
             }
             model.ListMaterial = listMaterial;
             Quantity(model);
-            //model.RentalCart = cart; 
-            //model.ChoosenMaterials = listMaterial;
+            model.RentalCart = cart;
+            model.ChoosenMaterials = listMaterial;
             return View(model);
         }
 
@@ -148,11 +148,20 @@ namespace MnsLocation5.Areas.Borrower.Controllers
 
             Rent r = new Rent();
 
+            //var rent = _context.Rents.Where(u => u.UserRefId == user.Id).FirstOrDefault();
+
+            //if(rent != null)
+            //{
+            //    _context.Remove(rent);
+            //    _context.SaveChanges();
+            //}
+
             r.RentRentalCartRefId = user.UserRentalCartRefId;
             r.RentDate = System.DateTime.Now;
             r.UserRefId = user.Id;
 
             _context.Rents.Add(r);
+            //cart.ChoosenMaterials = new List<Material>();
             _context.SaveChanges();
 
             return RedirectToAction(nameof(UserLocationCart7));
@@ -160,10 +169,10 @@ namespace MnsLocation5.Areas.Borrower.Controllers
 
         public async Task<IActionResult> UserRentalCartModification()
         {
-            UserRentalCartViewModel userRentalCartViewModel = new UserRentalCartViewModel();
             var user = await _userManager.GetUserAsync(User);
             var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
             cart.IsValidate = false;
+
             _context.SaveChanges();
 
             return RedirectToAction(nameof(UserHomePage2));
