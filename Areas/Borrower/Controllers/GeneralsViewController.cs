@@ -151,26 +151,21 @@ namespace MnsLocation5.Areas.Borrower.Controllers
             var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
             cart.IsValidate = true;
             
-            if(cart.ChoosenMaterials.Count == 0)
-            {
-                // Pop up qui dis que le panier doit contenir au moins un élément pour être validé
-            }
-            else
-            {
-                // Rent Instanciation 
+            
+            // Rent Instanciation 
 
-                Rent r = new Rent();
+            Rent r = new Rent();
 
-                var rent = _context.Rents.Where(u => u.UserRefId == user.Id).FirstOrDefault();
+            var rent = _context.Rents.Where(u => u.UserRefId == user.Id).FirstOrDefault();
 
 
-                r.RentRentalCartRefId = user.UserRentalCartRefId;
-                r.RentDate = System.DateTime.Now;
-                r.UserRefId = user.Id;
+            r.RentRentalCartRefId = user.UserRentalCartRefId;
+            r.RentDate = System.DateTime.Now;
+            r.UserRefId = user.Id;
 
-                _context.Rents.Add(r);
-                _context.SaveChanges();
-            }
+            _context.Rents.Add(r);
+            _context.SaveChanges();
+            
             return RedirectToAction(nameof(UserLocationCart7));
         }
 
