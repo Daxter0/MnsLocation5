@@ -39,7 +39,8 @@
                 <td>
                     @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
-                    <a asp-action="DeleteInRentalCart" asp-route-id="@item[item.Count-1].MaterialID">Delete</a>
+                    <a asp-action="DeleteInRentalCart" asp-route-id="@item[item.Count-1].MaterialID">Supprimer</a>
+                    <a asp-action="DeleteItemsAsync" asp-route-list="@item">Supprimer la ligne</a>
                 </td>
             </tr>
         }

@@ -33,8 +33,14 @@
                 @item.Count
             </td>
             <td>
+                <form asp-action="AddToRentalCart" asp-route-id="@item[item.Count-1].MaterialID" method="post" id="form-add-to-cart">
+                    <input type="number" min="0" value="1" max="@item.Count" name="Quantity" />
+                </form>
+            </td>
+            
+            <td>
                 <a asp-action="Details" asp-route-id="@item[item.Count-1]."MaterialID">Details</a> |
-                <a asp-action="AddToRentalCart" asp-route-id="@item[item.Count-1].MaterialID">Ajouter au panier</a>
+                <a href="#" onclick="document.querySelector('#form-add-to-cart').submit();">Ajouter au panier</a>
             </td>
         </tr>
 }

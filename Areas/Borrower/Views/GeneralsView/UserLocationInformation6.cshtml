@@ -1,8 +1,42 @@
-﻿@{
-    ViewData["Title"] = "UserLocationInformation";
+﻿@model MnsLocation5.ViewsModel.CreateMaterialCMD
+@{
+    ViewData["Title"] = "Mes Locations";
 }
 
-<div class="text-center">
-    <h1 class="display-4">UserLocationInformation</h1>
-    <p>This page is dedicated to the user. He will able to get more informations about his different location</p>
-</div>
+<h1>Mes Locations en cours</h1>
+
+@*<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Numéro de la location
+            </th>
+            <th>
+                Condition
+            </th>
+            <th>
+                Quantité
+            </th>
+            <th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ListOfListMaterials) {
+        <tr>
+            <td>
+                @item[item.Count-1].Name
+            </td>
+            <td>
+                @item[item.Count-1].Condition
+            </td>
+            <td>
+                @item.Count
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item[item.Count-1]."MaterialID">Details</a> |
+                <a asp-action="AddToRentalCart" asp-route-id="@item[item.Count-1].MaterialID">Ajouter au panier</a>
+            </td>
+        </tr>
+}
+    </tbody>*@
+@*</table>*@

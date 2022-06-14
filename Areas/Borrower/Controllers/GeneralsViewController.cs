@@ -75,6 +75,8 @@ namespace MnsLocation5.Areas.Borrower.Controllers
         }
         public IActionResult UserLocationInformation6()
         {
+            //var model = new CreateMaterialViewModel();
+            //var locationUser = _context.Ren
             return View();
         }
         public async Task<IActionResult> IndexMaterialAsync(int id)
@@ -90,17 +92,27 @@ namespace MnsLocation5.Areas.Borrower.Controllers
         }
 
         
-        public async Task<IActionResult> AddToRentalCart(int id)
+        public async Task<IActionResult> AddToRentalCart(int id, int quantity)
         {
 
             var material = _context.Materials.FirstOrDefault(x => x.MaterialID == id);
             var user = await _userManager.GetUserAsync(User);
+            var materials = _context.Materials.Where(x => x.Name == material.Name && x.Condition == material.Condition).Take(quantity).ToList();
             var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
+            
 
             if(cart.IsValidate == false)
             {
-                cart.ChoosenMaterials.Add(material);
-                _context.SaveChanges();
+                if(quantity <= materials.Count)
+                {
+                    foreach (var item in materials)
+                    {
+                        cart.ChoosenMaterials.Add(item);
+
+                    }
+                    _context.SaveChanges();
+
+                }
 
             }
             else
@@ -113,7 +125,7 @@ namespace MnsLocation5.Areas.Borrower.Controllers
 
 
         }
-        public IActionResult DeleteInRentalCart(int id)
+        public IActionResult DeleteInRentalCart(int id, int quantity)
         {
             var materialInCart = _context.MaterialRentalCarts.Where(x => x.MaterialID == id).Single();
             _context.MaterialRentalCarts.Remove(materialInCart);
@@ -151,12 +163,7 @@ namespace MnsLocation5.Areas.Borrower.Controllers
             var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
             cart.IsValidate = true;
             
-            if(cart.ChoosenMaterials.Count == 0)
-            {
-                // Pop up qui dis que le panier doit contenir au moins un élément pour être validé
-            }
-            else
-            {
+           
                 // Rent Instanciation 
 
                 Rent r = new Rent();
@@ -170,7 +177,7 @@ namespace MnsLocation5.Areas.Borrower.Controllers
 
                 _context.Rents.Add(r);
                 _context.SaveChanges();
-            }
+            
             return RedirectToAction(nameof(UserLocationCart7));
         }
 
@@ -203,6 +210,22 @@ namespace MnsLocation5.Areas.Borrower.Controllers
                 model.ListOfListMaterials.Add(materials);
             }
         }
+        //public async Task<IActionResult> DeleteItemsAsync(int id)
+        //{
+        //    var user =  await _userManager.GetUserAsync(User);
+        //    var material = _context.Materials.Where(x => x.MaterialID == id).Single();
+        //    var allSameMaterialsInDatabase = _context.Materials.Where(x=> x.TypeRefId == material.TypeRefId && x.Condition == material.Condition).ToList();
+        //    foreach (var item in allSameMaterialsInDatabase)
+        //    {
+
+        //    }
+        //    foreach (var item in list)
+        //    {
+        //        cart.ChoosenMaterials.Remove(item);
+        //    }
+        //    _context.SaveChanges();
+        //    return RedirectToAction(nameof(UserLocationCart7)) ;
+        //}
       
     }
 }
