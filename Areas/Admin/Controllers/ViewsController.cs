@@ -55,12 +55,6 @@ namespace MnsLocation5.Areas.Admin.Controllers
 
             List<User> userValidateRentalCart =  _context.Users.Where(u => u.RentalCart.IsValidate == true).ToList();
 
-            //List<RentalCart> rentalCarts = _context.RentalCarts.Where(r => r.IsValidate == true).ToList();
-            //foreach(RentalCart rentalCart in rentalCarts)
-            //{
-            //    userRentalCartViewModel.RentalCarts.Add(rentalCart);
-
-            //}
             foreach (User user in userValidateRentalCart)
             {
                 userRentalCartViewModel.Users.Add(user);
@@ -75,9 +69,6 @@ namespace MnsLocation5.Areas.Admin.Controllers
         }
         public IActionResult AdminAccountIndex()
         {
-
-            //var admin = await _signInManager.UserManager.GetUserAsync(User);
-            //await _signInManager.RefreshSignInAsync(admin);
             var users = _userManager.Users;
             return View(users);
         }
@@ -120,11 +111,6 @@ namespace MnsLocation5.Areas.Admin.Controllers
             {
                 NotFound();
             }
-
-            //await _signInManager.RefreshSignInAsync(user);
-
-            //return LocalRedirect("/Identity/Account/Manage/Index");
-
             return View(user);
         }
 
@@ -161,56 +147,53 @@ namespace MnsLocation5.Areas.Admin.Controllers
             return View("AdminAccountIndex", users);
         }
 
-        public async Task<IActionResult> UserRentalCartDetail(int id)
+        public IActionResult UserRentalCartDetail(int id)
         {
             CreateMaterialViewModel rentalViewModel = new CreateMaterialViewModel();
 
             var rentalCart = _context.RentalCarts.Where(x => x.RentalCartID == id).FirstOrDefault();
             var user = _context.Users.Where(u => u.UserRentalCartRefId == id).FirstOrDefault();
 
-            List<MaterialRentalCart> rentalCarts = _context.MaterialRentalCarts.Where(m => m.RentalCartID == id).ToList();
-
-            List<int> materialsId = new List<int>();
-
-            foreach(MaterialRentalCart materialRentalCart in rentalCarts)
+            var list = _context.MaterialRentalCarts.Where(_x => _x.RentalCartID == rentalCart.RentalCartID).ToList();
+            var listMaterial = new List<Material>();
+            foreach (MaterialRentalCart materialRentalCart in list)
             {
-                materialsId.Add(materialRentalCart.MaterialID);
+                var material = _context.Materials.Where(x => x.MaterialID == materialRentalCart.MaterialID).FirstOrDefault();
+                listMaterial.Add(material);
             }
-
-            List<Material> materials = new List<Material>();
-
-            foreach(int materialId in materialsId)
-            {
-                var material = _context.Materials.FirstOrDefault(m => m.MaterialID == materialId);
-                materials.Add(material);
-            }
-
-            foreach(Material material1 in materials)
-            {
-                rentalViewModel.ChoosenMaterials.Add(material1);
-            }
-
+            
+            rentalViewModel.ChoosenMaterials = listMaterial;
             rentalViewModel.RentalCart = rentalCart;
             rentalViewModel.User = user;
 
-
             return View("RentalCartDetails", rentalViewModel);
-
         }
 
         public async Task<IActionResult> LocationValidation(string id)
         {
             RentValidation rV = new RentValidation();
             var user = _context.Users.Where(u => u.Id == id).FirstOrDefault();
+            var rent = _context.Rents.Where(r => r.UserRefId == user.Id).OrderBy(e=>e.ID).LastOrDefault();
             var admin = await _userManager.GetUserAsync(User);
-            var rent = _context.Rents.Where(r => r.UserRefId == user.Id).FirstOrDefault();
+            var rentalCart = _context.RentalCarts.Where(r => r.RentalCartID == user.UserRentalCartRefId).FirstOrDefault();
+            var rentValidation = _context.RentValidations.Where(r => r.RentId == rent.ID).FirstOrDefault();
 
+            
             rV.ValidationDate = System.DateTime.Now;
             rV.AdminId = admin.Id;
             rV.RentId = rent.ID;
+            rentalCart.IsValidate = false;
+
+            var materialRentalCart = _context.MaterialRentalCarts.Where(r => r.RentalCartID == rentalCart.RentalCartID).ToList();
+                
+            foreach(MaterialRentalCart materialRentalCart1 in materialRentalCart)
+            {
+                _context.Remove(materialRentalCart1);
+            }
 
             _context.RentValidations.Add(rV);
             _context.SaveChanges();
+            
             return RedirectToAction(nameof(AdminLocationValidation14));
         }
 

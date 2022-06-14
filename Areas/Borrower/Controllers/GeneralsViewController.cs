@@ -97,9 +97,16 @@ namespace MnsLocation5.Areas.Borrower.Controllers
             var user = await _userManager.GetUserAsync(User);
             var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
 
+            if(cart.IsValidate == false)
+            {
+                cart.ChoosenMaterials.Add(material);
+                _context.SaveChanges();
 
-            cart.ChoosenMaterials.Add(material);
-            _context.SaveChanges();
+            }
+            else
+            {
+                // Afficher une popup
+            }
             var indexId = material.TypeRefId;
 
             return RedirectToAction("IndexMaterial", new {id = indexId});
@@ -143,27 +150,27 @@ namespace MnsLocation5.Areas.Borrower.Controllers
             var user = await _userManager.GetUserAsync(User);
             var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
             cart.IsValidate = true;
+            
+            if(cart.ChoosenMaterials.Count == 0)
+            {
+                // Pop up qui dis que le panier doit contenir au moins un élément pour être validé
+            }
+            else
+            {
+                // Rent Instanciation 
 
-            // Rent Instanciation 
+                Rent r = new Rent();
 
-            Rent r = new Rent();
+                var rent = _context.Rents.Where(u => u.UserRefId == user.Id).FirstOrDefault();
 
-            //var rent = _context.Rents.Where(u => u.UserRefId == user.Id).FirstOrDefault();
 
-            //if(rent != null)
-            //{
-            //    _context.Remove(rent);
-            //    _context.SaveChanges();
-            //}
+                r.RentRentalCartRefId = user.UserRentalCartRefId;
+                r.RentDate = System.DateTime.Now;
+                r.UserRefId = user.Id;
 
-            r.RentRentalCartRefId = user.UserRentalCartRefId;
-            r.RentDate = System.DateTime.Now;
-            r.UserRefId = user.Id;
-
-            _context.Rents.Add(r);
-            //cart.ChoosenMaterials = new List<Material>();
-            _context.SaveChanges();
-
+                _context.Rents.Add(r);
+                _context.SaveChanges();
+            }
             return RedirectToAction(nameof(UserLocationCart7));
         }
 
@@ -171,8 +178,10 @@ namespace MnsLocation5.Areas.Borrower.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
             var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
-            cart.IsValidate = false;
+            var rent = _context.Rents.Where(r => r.UserRefId == user.Id).OrderBy(e => e.ID).LastOrDefault();
 
+            cart.IsValidate = false;
+            _context.Remove(rent);
             _context.SaveChanges();
 
             return RedirectToAction(nameof(UserHomePage2));
