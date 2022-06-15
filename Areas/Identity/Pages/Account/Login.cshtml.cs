@@ -75,6 +75,11 @@ namespace MnsLocation5.Areas.Identity.Pages.Account
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
+            if(_signInManager.IsSignedIn(User))
+            {
+                await HttpContext.SignOutAsync();
+            }
+
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             ReturnUrl = returnUrl;
