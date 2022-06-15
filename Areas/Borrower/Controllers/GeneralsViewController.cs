@@ -97,22 +97,25 @@ namespace MnsLocation5.Areas.Borrower.Controllers
 
             var material = _context.Materials.FirstOrDefault(x => x.MaterialID == id);
             var user = await _userManager.GetUserAsync(User);
-            var materials = _context.Materials.Where(x => x.Name == material.Name && x.Condition == material.Condition).Take(quantity).ToList();
             var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
+            //materialInRentalCart = materialInRentalCart.Where(x => x.MaterialID == id).ToList();
+            var materials = _context.Materials.Where(x => x.MaterialID != _context.MaterialRentalCarts.Where(m => m.MaterialID == x.MaterialID && cart.RentalCartID == m.RentalCartID).Single().MaterialID && x.Name == material.Name && x.Condition == material.Condition).Take(quantity).ToList();
             
 
             if(cart.IsValidate == false)
             {
                 if(quantity <= materials.Count)
                 {
+                   
                     foreach (var item in materials)
                     {
-                        cart.ChoosenMaterials.Add(item);
-
+                            cart.ChoosenMaterials.Add(item);
                     }
-                    _context.SaveChanges();
-
-                }
+                        
+                }                 
+                    
+                   
+                    _context.SaveChanges();               
 
             }
             else
