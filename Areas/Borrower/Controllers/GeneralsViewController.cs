@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -6,7 +7,9 @@ using Microsoft.Extensions.Logging;
 using MnsLocation5.Data;
 using MnsLocation5.Models;
 using MnsLocation5.ViewsModel;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -144,29 +147,46 @@ namespace MnsLocation5.Areas.Borrower.Controllers
 
         }
 
-        public async Task<IActionResult> UserRentalCartValidation()
+        [HttpPost]
+        public async Task<IActionResult> UserRentalCartValidation(IFormCollection form)
         {
-            CreateMaterialViewModel userRentalCartViewModel = new CreateMaterialViewModel();
-            var user = await _userManager.GetUserAsync(User);
-            var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
-            cart.IsValidate = true;
-            
-            
-            // Rent Instanciation 
+            string startDateInput = form["StartDate"];
+            string endDateInput = form["EndDate"];
+            string startTimeInput = form["StartTime"];
+            string endTimeInput = form["EndTime"];
+            DateTime startDate = DateTime.Parse(startDateInput + " " + startTimeInput);
+            DateTime endDate = DateTime.Parse(endDateInput + " " + endTimeInput);
 
-            Rent r = new Rent();
-
-            var rent = _context.Rents.Where(u => u.UserRefId == user.Id).FirstOrDefault();
+            int result = DateTime.Compare(startDate, endDate);
 
 
-            r.RentRentalCartRefId = user.UserRentalCartRefId;
-            r.RentDate = System.DateTime.Now;
-            r.UserRefId = user.Id;
+            if (result > 0 )
+            {
+                return RedirectToAction(nameof(UserLocationCart7));
+            }
+            else
+            {
+                var user = await _userManager.GetUserAsync(User);
+                var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
+                cart.IsValidate = true;
 
-            _context.Rents.Add(r);
-            _context.SaveChanges();
-            
-            return RedirectToAction(nameof(UserLocationCart7));
+                // Rent Instanciation 
+
+                Rent r = new Rent();
+
+                var rent = _context.Rents.Where(u => u.UserRefId == user.Id).FirstOrDefault();
+
+                r.RentalStart = startDate;
+                r.RentalEnd = endDate;
+                r.RentRentalCartRefId = user.UserRentalCartRefId;
+                r.RentDate = DateTime.Now;
+                r.UserRefId = user.Id;
+
+                _context.Rents.Add(r);
+                _context.SaveChanges();
+
+                return RedirectToAction(nameof(UserLocationCart7));
+            }
         }
 
         public async Task<IActionResult> UserRentalCartModification()
