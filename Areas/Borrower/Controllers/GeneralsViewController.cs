@@ -83,7 +83,6 @@ namespace MnsLocation5.Areas.Borrower.Controllers
         {
             var model = new CreateMaterialViewModel();
             model.MaterialType = _context.Types.Where(x => x.Id == id).Single();
-
             await CheckCartUserAsync(model);
             Quantity(model);
 
@@ -128,7 +127,7 @@ namespace MnsLocation5.Areas.Borrower.Controllers
 
 
         }
-        public IActionResult DeleteInRentalCart(int id, int quantity)
+        public IActionResult DeleteInRentalCart(int id)
         {
             var materialInCart = _context.MaterialRentalCarts.Where(x => x.MaterialID == id).Single();
             _context.MaterialRentalCarts.Remove(materialInCart);
@@ -199,6 +198,7 @@ namespace MnsLocation5.Areas.Borrower.Controllers
         }
         public void Quantity(CreateMaterialViewModel model)
         {
+
             foreach (var item in model.ListMaterial.GroupBy(m => new { m.Name, m.Condition }).Select(n => n.First()).ToList())
             {
                 List<Material> materials = new List<Material>();
@@ -209,26 +209,51 @@ namespace MnsLocation5.Areas.Borrower.Controllers
                     {
                         materials.Add(item1);
                     }
+
                 }
                 model.ListOfListMaterials.Add(materials);
             }
         }
-        //public async Task<IActionResult> DeleteItemsAsync(int id)
-        //{
-        //    var user =  await _userManager.GetUserAsync(User);
-        //    var material = _context.Materials.Where(x => x.MaterialID == id).Single();
-        //    var allSameMaterialsInDatabase = _context.Materials.Where(x=> x.TypeRefId == material.TypeRefId && x.Condition == material.Condition).ToList();
-        //    foreach (var item in allSameMaterialsInDatabase)
-        //    {
+        public async Task<IActionResult> DeleteItemsAsync(int id)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var material = _context.Materials.Where(x => x.MaterialID == id).Single();
+            var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
+            IEnumerable<Material> allMaterialInCart = _context.Materials.Where(x => x.MaterialID == _context.MaterialRentalCarts.Where(y => y.MaterialID == x.MaterialID).Single().MaterialID && x.Name == material.Name && x.Condition == material.Condition).ToList();
+            //Le LINQ dans le LINQ à l'air de marcher que dans le context donc on fait une foreach imbrique pour parcourir allMaterialInCart
+            foreach (var item in allMaterialInCart)
+            {
+                foreach (var item1 in _context.MaterialRentalCarts.Where(x => x.RentalCartID == cart.RentalCartID))
+                {
+                    if(item.MaterialID == item1.MaterialID)
+                    {
+                        _context.MaterialRentalCarts.Remove(item1);
 
-        //    }
-        //    foreach (var item in list)
-        //    {
-        //        cart.ChoosenMaterials.Remove(item);
-        //    }
-        //    _context.SaveChanges();
-        //    return RedirectToAction(nameof(UserLocationCart7)) ;
-        //}
-      
+                    }
+
+                }
+
+
+            }
+            _context.SaveChanges();
+            return RedirectToAction(nameof(UserLocationCart7));
+        }
+        //Delete tout le panier, a voir
+        public async Task<IActionResult> DeleteAllItemsAsync()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
+            var allMaterialInRentalCartToDelete1 = _context.MaterialRentalCarts.Where(x => x.MaterialID == _context.Materials.Where(y => y.MaterialID == x.MaterialID).Single().MaterialID && x.RentalCartID == cart.RentalCartID).ToList();
+            foreach (var item in allMaterialInRentalCartToDelete1)
+            {
+                _context.MaterialRentalCarts.Remove(item);
+
+
+            }
+            _context.SaveChanges();
+            return RedirectToAction(nameof(UserLocationCart7));
+        }
+        
+
     }
 }
