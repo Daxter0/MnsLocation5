@@ -154,15 +154,9 @@ namespace MnsLocation5.Areas.Admin.Controllers
             var rentalCart = _context.RentalCarts.Where(x => x.RentalCartID == id).FirstOrDefault();
             var user = _context.Users.Where(u => u.UserRentalCartRefId == id).FirstOrDefault();
 
-            var list = _context.MaterialRentalCarts.Where(_x => _x.RentalCartID == rentalCart.RentalCartID).ToList();
-            var listMaterial = new List<Material>();
-            foreach (MaterialRentalCart materialRentalCart in list)
-            {
-                var material = _context.Materials.Where(x => x.MaterialID == materialRentalCart.MaterialID).FirstOrDefault();
-                listMaterial.Add(material);
-            }
+            List<Material> materials = GetUserRentalCartMaterials(user);
             
-            rentalViewModel.ChoosenMaterials = listMaterial;
+            rentalViewModel.ChoosenMaterials = materials;
             rentalViewModel.RentalCart = rentalCart;
             rentalViewModel.User = user;
 
@@ -176,8 +170,10 @@ namespace MnsLocation5.Areas.Admin.Controllers
             var rent = _context.Rents.Where(r => r.UserRefId == user.Id).OrderBy(e=>e.ID).LastOrDefault();
             var admin = await _userManager.GetUserAsync(User);
             var rentalCart = _context.RentalCarts.Where(r => r.RentalCartID == user.UserRentalCartRefId).FirstOrDefault();
-            var rentValidation = _context.RentValidations.Where(r => r.RentId == rent.ID).FirstOrDefault();
 
+            List<Material> materials = GetUserRentalCartMaterials(user);
+
+            materials.ForEach(m => m.Statut = "Réservé");
             
             rV.ValidationDate = System.DateTime.Now;
             rV.AdminId = admin.Id;
@@ -200,6 +196,20 @@ namespace MnsLocation5.Areas.Admin.Controllers
         public IActionResult LocationRefuse()
         {
             return RedirectToAction(nameof(AdminLocationValidation14));
+        }
+
+        public List<Material> GetUserRentalCartMaterials(User user)
+        {
+            var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
+            var list = _context.MaterialRentalCarts.Where(_x => _x.RentalCartID == cart.RentalCartID).ToList();//Get data from associative table
+            var listMaterial = new List<Material>();
+            foreach (var item in list)
+            {
+                var materialTest = _context.Materials.Where(x => x.MaterialID == item.MaterialID).FirstOrDefault();
+                listMaterial.Add(materialTest);
+            }
+
+            return listMaterial;
         }
     }
 }

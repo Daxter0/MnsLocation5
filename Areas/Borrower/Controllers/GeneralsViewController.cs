@@ -54,21 +54,16 @@ namespace MnsLocation5.Areas.Borrower.Controllers
         }
         public async Task<IActionResult> UserLocationCart7()
         {
+            ViewBag.ErrorMessage = "Veuillez saisir des dates valides";
             var model = new CreateMaterialViewModel();
             var user = await _userManager.GetUserAsync(User);
             var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
-            
-            var list = _context.MaterialRentalCarts.Where(_x => _x.RentalCartID == cart.RentalCartID).ToList();//Get data from associative table
-            var listMaterial = new List<Material>();
-            foreach (var item in list)
-            {
-                var materialTest = _context.Materials.Where(x => x.MaterialID == item.MaterialID).FirstOrDefault();
-                listMaterial.Add(materialTest);
-            }
-            model.ListMaterial = listMaterial;
+
+            List<Material> materials = await GetUserRentalCartMaterialsAsync();
+            model.ListMaterial = materials;
             Quantity(model);
             model.RentalCart = cart;
-            model.ChoosenMaterials = listMaterial;
+            model.ChoosenMaterials = materials;
             return View(model);
         }
 
@@ -95,7 +90,6 @@ namespace MnsLocation5.Areas.Borrower.Controllers
         
         public async Task<IActionResult> AddToRentalCart(int id)
         {
-
             var material = _context.Materials.FirstOrDefault(x => x.MaterialID == id);
             var user = await _userManager.GetUserAsync(User);
             var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
@@ -160,7 +154,7 @@ namespace MnsLocation5.Areas.Borrower.Controllers
             int result = DateTime.Compare(startDate, endDate);
 
 
-            if (result > 0 )
+            if (result > 0 || result == 0)
             {
                 return RedirectToAction(nameof(UserLocationCart7));
             }
@@ -170,6 +164,9 @@ namespace MnsLocation5.Areas.Borrower.Controllers
                 var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
                 cart.IsValidate = true;
 
+                List<Material> materials = await GetUserRentalCartMaterialsAsync();
+
+                materials.ForEach(m => m.Statut = "En attente");
                 // Rent Instanciation 
 
                 Rent r = new Rent();
@@ -217,6 +214,21 @@ namespace MnsLocation5.Areas.Borrower.Controllers
                 }
                 model.ListOfListMaterials.Add(materials);
             }
+        }
+
+        public async Task<List<Material>> GetUserRentalCartMaterialsAsync()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
+            var list = _context.MaterialRentalCarts.Where(_x => _x.RentalCartID == cart.RentalCartID).ToList();//Get data from associative table
+            var listMaterial = new List<Material>();
+            foreach (var item in list)
+            {
+                var materialTest = _context.Materials.Where(x => x.MaterialID == item.MaterialID).FirstOrDefault();
+                listMaterial.Add(materialTest);
+            }
+
+            return listMaterial;
         }
       
     }

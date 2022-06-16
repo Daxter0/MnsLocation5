@@ -53,13 +53,13 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label>Date de début : </label>
-            <input type="date" name="StartDate"/>
-            <input type="time" name="StartTime"/>
+            <input type="date" name="StartDate" required/>
+            <input type="time" name="StartTime" required/>
         </div>
         <div class="form-group">
             <label>Date de fin : </label>
-            <input type="date"  name="EndDate"/>
-            <input type="time" name="EndTime"/>
+            <input type="date"  name="EndDate" required/>
+            <input type="time" name="EndTime" required/>
         </div>
         <div class="form-group">
             <input type="submit" value="Valider le panier" class="btn btn-primary"/>
@@ -68,7 +68,7 @@
         
     </form>
     
-    
+    @*<p></p> @ViewBag.ErrorMessage*@
 }
 else
 {

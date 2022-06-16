@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ViewsModel\CreateMaterialCMD.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Views\Shared\_LayoutForAllPages.cshtml.css" />
   </ItemGroup>
 
