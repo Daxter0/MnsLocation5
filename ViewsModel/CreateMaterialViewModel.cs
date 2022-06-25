@@ -22,6 +22,8 @@ namespace MnsLocation5.ViewsModel
         public RentalCart RentalCart { get; set; } = new RentalCart();
         public MaterialRentalCart MaterialRentalCart { get; set; } = new MaterialRentalCart();
         public List<Material> ChoosenMaterials { get; set; } = new List<Material>();
+        public List<RentValidation> RentValidationList { get; set; }
+        public Dictionary<RentValidation,User> RentValidationUser { get; set; }
         public int Quantity { get; set; }
 
         public CreateMaterialViewModel()
@@ -31,6 +33,8 @@ namespace MnsLocation5.ViewsModel
             ListType = new List<SelectListItem>();
             ListStatut = new List<SelectListItem>();
             ListOfListMaterials= new List<List<Material>>();
+            RentValidationList = new List<RentValidation>();
+            RentValidationUser = new Dictionary<RentValidation, User>();
             Quantity = 0;
         }
         public CreateMaterialViewModel(Material material, MaterialType materialType, List<SelectListItem> listType)

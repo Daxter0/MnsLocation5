@@ -95,7 +95,7 @@ namespace MnsLocation5.Areas.Borrower.Controllers
             var user = await _userManager.GetUserAsync(User);
             var cart = _context.RentalCarts.Where(x => x.RentalCartID == user.UserRentalCartRefId).Single();
             //materialInRentalCart = materialInRentalCart.Where(x => x.MaterialID == id).ToList();
-            var materials = _context.Materials.Where(x => x.MaterialID != _context.MaterialRentalCarts.Where(m => m.MaterialID == x.MaterialID && cart.RentalCartID == m.RentalCartID).Single().MaterialID && x.Name == material.Name && x.Condition == material.Condition).Take(quantity).ToList();
+            var materials = _context.Materials.Where(x => x.MaterialID != _context.MaterialRentalCarts.Where(m => m.MaterialID == x.MaterialID && cart.RentalCartID == m.RentalCartID).Single().MaterialID && x.Name == material.Name && x.Condition == material.Condition && x.Statut =="Available").Take(quantity).ToList();
             
 
             if(cart.IsValidate == false)

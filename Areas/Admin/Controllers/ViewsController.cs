@@ -42,7 +42,30 @@ namespace MnsLocation5.Areas.Admin.Controllers
         }
         public IActionResult AdminLocationrequestManagement10()
         {
-            return View();
+            CreateMaterialViewModel model = new CreateMaterialViewModel();
+            var listRentValidation = _context.RentValidations.ToList();
+            model.RentValidationList = listRentValidation;
+            foreach (var item in _context.RentValidations.ToList())
+            {
+                foreach(var item2 in _context.Rents.ToList())
+                {
+                    if(item.RentId == item2.ID)
+                    {
+                        foreach (var item3 in _context.Users.ToList())
+                        {
+                            if(item2.UserRefId == item3.Id)
+                            {
+                                model.RentValidationUser.Add(item,item3);
+
+                            }
+                        }
+                    }
+                   
+
+                }
+            }
+            
+            return View(model);
         }
         public IActionResult AdminValidationMaterialGiveBack13()
         {

@@ -1,9 +1,38 @@
-﻿@{
-    ViewData["Title"] = "AdminLocationManagementRequest";
+﻿@model MnsLocation5.ViewsModel.CreateMaterialViewModel
+@{
+    ViewData["Title"] = "Location en cours des utilisateurs";
     Layout = "/Views/Shared/_LayoutForAdmin.cshtml";
 }
 
 <div class="text-center">
-    <h1 class="display-4">AdminLocationManagementRequest</h1>
+    <h1 class="display-4">Location en cours des utilisateurs</h1>
     <p>The page where the admin will be able to manage location and location request</p>
 </div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Rent n°
+            </th>
+            <th>
+                Nom d'utilisateur
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (KeyValuePair<RentValidation, User> item in Model.RentValidationUser) {
+        <tr>
+            <td>
+                @item.Key.RentId
+            </td>
+            <td>
+                @item.Value
+            </td>
+            <td>
+                //TODO
+                @*<a asp-action="UserRentalCartDetail" asp-route-id="@item.UserRentalCartRefId">Détails</a> |*@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
